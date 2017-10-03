@@ -1,0 +1,13 @@
+Login API:
+	Checks existence of a user, and checks whether credentials are correct
+	URL = http://qobiljon.pythonanywhere.com/users/login
+	Requires two arguments: "username", and "password"
+	Return code variable name: "result" (integer)
+	Return codes value: -1(bad request), 0(success), 1(failed)
+
+Register API:
+	Registers a new user, after checking existence of given credentials
+	URL = http://qobiljon.pythonanywhere.com/users/register
+	Requires three arguments: "username", "email", and "password"
+	Return code variable name: "result" (integer)
+	Return codes: -1(bad request), 0(success), 1(failed)
