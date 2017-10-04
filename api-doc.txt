@@ -56,7 +56,7 @@ Description:                    Predicts and returns the most probable new perso
 API URL:                        http://qobiljon.pythonanywhere.com/events/predict
 Required json header fields:    Content-Type (application/json)
 Required json body fields:      username (string, maxlen=32, FK)
-                                paassword (string, maxlen=32)
+                                password (string, maxlen=32)
 Additional return fields:       predicted_time (string, format: 'yyyymmdd-hhmm')
 
 
