@@ -2,6 +2,10 @@ API Documentation for the project "My Week"
 Author:         Kobiljon Toshnazarov
 Last Edited:    October 4th, 2017
 
+Note:
+Return value 'result' is an integer field, and is always returned in a json object from all APIs.
+Return values are: -1(bad request), 0(success), 1(failure)
+
 
 -*-*- Login API:
 Description:                    Checks existence of a user, and checks whether credentials are correct
@@ -9,11 +13,7 @@ API URL:                        http://qobiljon.pythonanywhere.com/users/login
 Required json header fields:    Content-Type (application/json)
 Required json body fields:      username (string, maxlen=32, PK)
                                 password (string, maxlen=32)
-Return code:                    result (integer field)
-Return values:                  -1 (bad request)
-                                0 (success)
-                                1 (failure)
-Additional return codes:        reason (in bad request case)
+Additional return fields:       reason (string, in bad request case)
 
 
 -*-*- Register API:
@@ -23,11 +23,8 @@ Required json header fields:    Content-Type (application/json)
 Required json body fields:      username (string, maxlen=32, PK)
                                 password (string, maxlen=32)
                                 email (string, maxlen=64)
-Return code:                    result (integer field)
-Return values:                  -1 (bad request)
-                                0 (success)
-                                1 (failure)
-Additional return codes:        error (in failure case), reason (in bad request case)
+Additional return fields:       error (string, in failure case)
+                                reason (string, in bad request case)
 
 
 -*-*- Create Event API:
@@ -35,17 +32,40 @@ Desciption:                     Creates a customized event by the user in the se
 API URL:                        http://qobiljon.pythonanywhere.com/events/create
 Required json header fields:    Content-Type (application/json)
 Required json body fields:      username (string, maxlen=32, FK)
-                                paassword (string, maxlen=32)
+                                password (string, maxlen=32)
                                 start_time (maxlen=13, format: (dynamic on MODE_SINGLE) 'yyyymmdd-hhmm', (static on MODE_REPEAT) 'hhmm')
                                 repeat_mode (maxlen=9, format: 'days-xxxx', 'repeat', 'single')
                                 is_active (boolean)
                                 event_name (string, maxlen=32, default: empty string)
                                 event_note (string, maxlen=32, default: empty string)
-Return code:                    result: integer field
-Return values:                  -1 (bad request)
-                                0 (success)
-                                1 (failure)
-Additional return codes:        event_id (in success case), reason (in failure case)
+Additional return codes:        event_id (long, in success case)
+                                reason (string, in failure case)
+
+
+-*-*- Category Map API:
+Description:                    For downloading list of string-to-integer mapping of event categories and their codes.
+API URL:                        http://qobiljon.pythonanywhere.com/events/categories
+Required json header fields:    (must not have a header, or header must be empty)
+Required json body fields:      (must not have a body, or body must be empty)
+Additional return codes:        length (integer, the length of categories array)
+                                categories (json-object array)
+
+
+-*-*- Predict API:
+Description:                    Predicts and returns the most probable new personal event time according to a specific requested category ID using Artificial Intelligence.
+API URL:                        http://qobiljon.pythonanywhere.com/events/predict
+Required json header fields:    Content-Type (application/json)
+Required json body fields:      username (string, maxlen=32, FK)
+                                paassword (string, maxlen=32)
+Additional return fields:       predicted_time (string, format: 'yyyymmdd-hhmm')
+
+
+-*-*- Load Weekly Events API:
+Description:                    Returns all events set for a requested period (specified week).
+API URL:                        http://qobiljon.pythonanywhere.com/events/load_week
+Required json header fields:    Content-Type (application/json)
+Required json body fields:      TODO: not finished yet
+Additional return fields:       TODO: not finished yet
 
 
 -*-*- Template API:
@@ -53,8 +73,4 @@ Description:
 API URL:                        http://qobiljon.pythonanywhere.com/~
 Required json header fields:    Content-Type (application/json)
 Required json body fields:
-Return code:                    result (integer field)
-Return values:                  -1 (bad request)
-                                0 (success)
-                                1 (failure)
-Additional return codes:
+Additional return fields:
