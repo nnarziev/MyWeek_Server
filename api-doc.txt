@@ -1,13 +1,60 @@
-Login API:
-	Checks existence of a user, and checks whether credentials are correct
-	URL = http://qobiljon.pythonanywhere.com/users/login
-	Requires two arguments: "username", and "password"
-	Return code variable name: "result" (integer)
-	Return codes value: -1(bad request), 0(success), 1(failed)
+API Documentation for the project "My Week"
+Author:         Kobiljon Toshnazarov
+Last Edited:    October 4th, 2017
 
-Register API:
-	Registers a new user, after checking existence of given credentials
-	URL = http://qobiljon.pythonanywhere.com/users/register
-	Requires three arguments: "username", "email", and "password"
-	Return code variable name: "result" (integer)
-	Return codes: -1(bad request), 0(success), 1(failed)
+
+-*-*- Login API:
+Description:                    Checks existence of a user, and checks whether credentials are correct
+API URL:                        http://qobiljon.pythonanywhere.com/users/login
+Required json header fields:    Content-Type (application/json)
+Required json body fields:      username (string, maxlen=32, PK)
+                                password (string, maxlen=32)
+Return code:                    result (integer field)
+Return values:                  -1 (bad request)
+                                0 (success)
+                                1 (failure)
+Additional return codes:        reason (in bad request case)
+
+
+-*-*- Register API:
+Description:                    Registers a new user, after checking existence of given credentials
+API URL:                        http://qobiljon.pythonanywhere.com/users/register
+Required json header fields:    Content-Type (application/json)
+Required json body fields:      username (string, maxlen=32, PK)
+                                password (string, maxlen=32)
+                                email (string, maxlen=64)
+Return code:                    result (integer field)
+Return values:                  -1 (bad request)
+                                0 (success)
+                                1 (failure)
+Additional return codes:        error (in failure case), reason (in bad request case)
+
+
+-*-*- Create Event API:
+Desciption:                     Creates a customized event by the user in the server database
+API URL:                        http://qobiljon.pythonanywhere.com/events/create
+Required json header fields:    Content-Type (application/json)
+Required json body fields:      username (string, maxlen=32, FK)
+                                paassword (string, maxlen=32)
+                                start_time (maxlen=13, format: (dynamic on MODE_SINGLE) 'yyyymmdd-hhmm', (static on MODE_REPEAT) 'hhmm')
+                                repeat_mode (maxlen=9, format: 'days-xxxx', 'repeat', 'single')
+                                is_active (boolean)
+                                event_name (string, maxlen=32, default: empty string)
+                                event_note (string, maxlen=32, default: empty string)
+Return code:                    result: integer field
+Return values:                  -1 (bad request)
+                                0 (success)
+                                1 (failure)
+Additional return codes:        event_id (in success case), reason (in failure case)
+
+
+-*-*- Template API:
+Description:
+API URL:                        http://qobiljon.pythonanywhere.com/~
+Required json header fields:    Content-Type (application/json)
+Required json body fields:
+Return code:                    result (integer field)
+Return values:                  -1 (bad request)
+                                0 (success)
+                                1 (failure)
+Additional return codes:

@@ -4,7 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^create$', views.create_event)
+    url(r'^create$', views.create_custom_event)
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

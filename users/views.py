@@ -33,7 +33,7 @@ def handle_login(request):
             return Res(data={'result': RES_SUCCESS})
         else:
             return Res(data={'result': RES_FAILURE})
-    return Res(data={'result': RES_BAD_REQUEST, 'note': 'Username or Password was not passed as a POST argument!'})
+    return Res(data={'result': RES_BAD_REQUEST, 'reason': 'Username or Password was not passed as a POST argument!'})
 
 
 @api_view(['POST'])
@@ -54,4 +54,4 @@ def handle_register(request):
             except error:
                 return Res(data={'result': RES_FAILURE, 'error': error.__str__()})
     return Res(
-        data={'result': RES_BAD_REQUEST, 'note': 'Email, Username, or Password was not passed as a POST argument!'})
+        data={'result': RES_BAD_REQUEST, 'reason': 'Email, Username, or Password was not passed as a POST argument!'})
