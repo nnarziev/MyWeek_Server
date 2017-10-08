@@ -31,8 +31,8 @@ class Event(models.Model):
     # the time tick when event created is the event id
     event_id = models.BigIntegerField(primary_key=True, default=0)
     user = models.ForeignKey('users.User', on_delete=CASCADE)
-    # format: repeat-(1~127 - in binary format like 1111000), single
-    repeat_mode = models.CharField(max_length=9)
+    # format: 'binary 1~127 for repeating', '0 for single time event'
+    repeat_mode = models.SmallIntegerField()
     # format: (dynamic on MODE_SINGLE)yymmddhhmm, (static on MODE_REPEAT)hhmm
     start_time = models.IntegerField()
     # in minutes, and only multiple of 30min
@@ -41,3 +41,15 @@ class Event(models.Model):
     event_name = models.CharField(max_length=32, default='')
     event_note = models.CharField(max_length=200, default='')
     objects = EventManager()
+
+    def __json__(self):
+        return {
+            'event_id': self.event_id,
+            'username': self.user.username,
+            'repeat_mode': self.repeat_mode,
+            'start_time': self.start_time,
+            'length': self.length,
+            'is_active': self.is_active,
+            'event_name': self.event_name,
+            'event_note': self.event_note
+        }

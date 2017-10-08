@@ -7,7 +7,7 @@ Return value 'result' is an integer field, and is always returned in a json obje
 Return values are: -1(bad request), 0(success), 1(failure)
 
 
--*-*- Login API:
+-*-*- Login API (POST):
 Description:                    Checks existence of a user, and checks whether credentials are correct
 API URL:                        http://qobiljon.pythonanywhere.com/users/login
 Required json header fields:    Content-Type (application/json)
@@ -16,7 +16,7 @@ Required json body fields:      username (string, maxlen=32, PK)
 Additional return fields:       reason (string, in bad request case)
 
 
--*-*- Register API:
+-*-*- Register API (POST):
 Description:                    Registers a new user, after checking existence of given credentials
 API URL:                        http://qobiljon.pythonanywhere.com/users/register
 Required json header fields:    Content-Type (application/json)
@@ -27,14 +27,15 @@ Additional return fields:       error (string, in failure case)
                                 reason (string, in bad request case)
 
 
--*-*- Create Event API:
+-*-*- Create Event API (POST):
 Desciption:                     Creates a customized event by the user in the server database
 API URL:                        http://qobiljon.pythonanywhere.com/events/create
 Required json header fields:    Content-Type (application/json)
 Required json body fields:      username (string, maxlen=32, FK)
                                 password (string, maxlen=32)
-                                start_time (maxlen=13, format: (dynamic on MODE_SINGLE) 'yyyymmdd-hhmm', (static on MODE_REPEAT) 'hhmm')
-                                repeat_mode (maxlen=9, format: 'days-xxxx', 'repeat', 'single')
+                                start_time (integer, format: (dynamic on MODE_SINGLE) 'yymmddhhmm', (static on MODE_REPEAT) 'hhmm')
+                                repeat_mode (integer, format: 'binary 1~127 for repeating', '0 for single time event')
+                                length (short integer, only multiple of 30 except 0)
                                 is_active (boolean)
                                 event_name (string, maxlen=32, default: empty string)
                                 event_note (string, maxlen=32, default: empty string)
@@ -42,7 +43,7 @@ Additional return codes:        event_id (long, in success case)
                                 reason (string, in failure case)
 
 
--*-*- Category Map API:
+-*-*- Category Map API (GET, POST):
 Description:                    For downloading list of string-to-integer mapping of event categories and their codes.
 API URL:                        http://qobiljon.pythonanywhere.com/events/categories
 Required json header fields:    (must not have a header, or header must be empty)
@@ -51,24 +52,36 @@ Additional return codes:        length (integer, the length of categories array)
                                 categories (json-object array)
 
 
--*-*- Predict API:
+-*-*- Suggest API (POST):
 Description:                    Predicts and returns the most probable new personal event time according to a specific requested category ID using Artificial Intelligence.
 API URL:                        http://qobiljon.pythonanywhere.com/events/predict
 Required json header fields:    Content-Type (application/json)
 Required json body fields:      username (string, maxlen=32, FK)
                                 password (string, maxlen=32)
-Additional return fields:       predicted_time (string, format: 'yyyymmdd-hhmm')
+Additional return fields:       suggested_time (string, format: 'yyyymmdd-hhmm')
 
 
--*-*- Load Weekly Events API:
-Description:                    Returns all events set for a requested period (specified week).
+-*-*- Fetch Events API (POST):
+Description:                    Returns all events set at the specifically requested period of time.
 API URL:                        http://qobiljon.pythonanywhere.com/events/load_week
 Required json header fields:    Content-Type (application/json)
-Required json body fields:      TODO: not finished yet
-Additional return fields:       TODO: not finished yet
+Required json body fields:      username
+                                password
+                                period_from
+                                period_till
 
 
--*-*- Template API:
+-*-*- Disable API (POST):
+Description:                    Disables a single event.
+API URL:                        http://qobiljon.pythonanywhere.com/events/disable
+Required json header fields:    Content-Type (application/json)
+Required json body fields:      username
+                                password
+                                event_id
+
+
+
+-*-*- Template API (GET, POST):
 Description:
 API URL:                        http://qobiljon.pythonanywhere.com/~
 Required json header fields:    Content-Type (application/json)
