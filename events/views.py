@@ -10,9 +10,35 @@ from users.views import is_user_valid, RES_BAD_REQUEST, RES_SUCCESS, RES_FAILURE
 from users.models import User
 
 
+@api_view(['POST'])
+def flushdb(request):
+    req_body = request.body.decode('utf-8')
+    json_body = json.loads(req_body)
+
+    if 'data' in json_body:
+        if 'user' in json_body['data']:
+            User.objects.all().delete()
+        if 'event' in json_body['data']:
+            Event.objects.all().delete()
+        return Res(data={'result': 'all done'})
+    else:
+        return Res(data={'result': 'failed'})
+
+
 @api_view(['GET', 'POST'])
 def get_categorycodes(request):
     return Res(data={'result': RES_SUCCESS, 'length': cat_map.__len__(), 'categories': cat_map})
+
+
+@api_view(['POST'])
+def get_suggestion(request):
+    req_body = request.body.decode('utf-8')
+    json_body = json.loads(req_body)
+    if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']) and 'category_id' in json_body:
+        predicted_time = ai_predict_time(json_body['username'], json_body['category_id'])
+        return Res(data={'result': RES_SUCCESS, 'suggested_time': predicted_time})
+    else:
+        return Res(data={'result': RES_BAD_REQUEST})
 
 
 @api_view(['POST'])
@@ -33,17 +59,6 @@ def get_events(request):
         result['array'] = array
         return Res(data=result)
     return Res(data={'result': RES_BAD_REQUEST})
-
-
-@api_view(['POST'])
-def get_suggestion(request):
-    req_body = request.body.decode('utf-8')
-    json_body = json.loads(req_body)
-    if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']) and 'category_id' in json_body:
-        predicted_time = ai_predict_time(json_body['username'], json_body['category_id'])
-        return Res(data={'result': RES_SUCCESS, 'suggested_time': predicted_time})
-    else:
-        return Res(data={'result': RES_BAD_REQUEST})
 
 
 @api_view(['POST'])

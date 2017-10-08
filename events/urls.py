@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^suggest$', views.get_suggestion),
     url(r'^fetch$', views.get_events),
     url(r'^disable$', views.disable_event),
+    url(r'^flushdb$', views.flushdb),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
