@@ -52,7 +52,7 @@ def get_events(request):
         result = {}
         array = []
 
-        for event in Event.objects.filter(user=user, start_time__gte=_from, start_time__lt=_till):
+        for event in Event.objects.filter(user=user, is_active=True, start_time__gte=_from, start_time__lt=_till):
             array.append(event.__json__())
 
         result['result'] = RES_SUCCESS

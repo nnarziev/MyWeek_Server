@@ -49,7 +49,6 @@ class Event(models.Model):
             'repeat_mode': self.repeat_mode,
             'start_time': self.start_time,
             'length': self.length,
-            'is_active': self.is_active,
             'event_name': self.event_name,
             'event_note': self.event_note
         }
