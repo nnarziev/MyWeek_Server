@@ -13,14 +13,14 @@ RES_BAD_REQUEST = -1
 # endregion
 
 
-def user_exists(_username):
-    return User.objects.filter(username=_username).exists()
+def user_exists(username):
+    return User.objects.filter(username=username).exists()
 
 
-def is_user_valid(_username, _password):
-    if user_exists(_username):
-        user = User.objects.get(username=_username)
-        return user.password == _password
+def is_user_valid(username, password):
+    if user_exists(username):
+        user = User.objects.get(username=username)
+        return user.password == password
     return False
 
 
@@ -41,13 +41,13 @@ def handle_register(request):
     req_body = request.body.decode('utf-8')
     json_body = json.loads(req_body)
     if 'username' in json_body and 'password' in json_body and 'email' in json_body:
-        _username = json_body['username']
-        _password = json_body['password']
-        _email = json_body['email']
-        if user_exists(_username):
+        username = json_body['username']
+        password = json_body['password']
+        email = json_body['email']
+        if user_exists(username):
             return Res(data={'result': RES_FAILURE})
         else:
-            user = User.create(_username, _password, _email)
+            user = User.objects.create_user(username=username, password=password, email=email)
             try:
                 user.save()
                 return Res(data={'result': RES_SUCCESS})

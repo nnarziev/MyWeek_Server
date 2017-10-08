@@ -7,6 +7,8 @@ from ai_core import ai_predict_time, cat_map
 from events.models import Event
 from users.views import is_user_valid, RES_BAD_REQUEST, RES_SUCCESS, RES_FAILURE
 
+from users.models import User
+
 
 @api_view(['POST'])
 def get_categorycodes(request):
@@ -25,6 +27,11 @@ def get_events(request):
 
 @api_view(['POST'])
 def get_prediction(request):
+    events = []
+    user = User.objects.get(username='negmatjon')
+    for n in range(0, 25):
+        event = Event.objects.create_event(user=user, repeat_mode='repeat=127', start_time=1234567890, length=30)
+
     req_body = request.body.decode('utf-8')
     json_body = json.loads(req_body)
     if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']) and 'category_id' in json_body:
@@ -40,7 +47,8 @@ def create_custom_event(request):
     json_body = json.loads(req_body)
 
     if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']):
-        event = Event.create(json_body['username'], json_body['start_time'], json_body['repeat_mode'], json_body['is_active'], json_body['event_name'], json_body['event_note'])
+        event = Event.objects.create_event(json_body['username'], json_body['start_time'], json_body['repeat_mode'], json_body['length'], json_body['is_active'], json_body['event_name'],
+                                           json_body['event_note'])
         try:
             event.save()
             return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
