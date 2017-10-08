@@ -70,7 +70,7 @@ Additional return fields:       suggested_time (string, format: 'yyyymmdd-hhmm')
 
 -*-*- Fetch Events API (POST):
 Description:                    Returns all events set at the specifically requested period of time.
-API URL:                        http://qobiljon.pythonanywhere.com/events/load_week
+API URL:                        http://qobiljon.pythonanywhere.com/events/fetch
 Required json header fields:    Content-Type (application/json)
 Required json body fields:      username (string, maxlen=32, FK)
                                 password (string, maxlen=32)

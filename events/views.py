@@ -68,20 +68,20 @@ def create_event(request):
 
     if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']):
         user = User.objects.get(username=json_body['username'])
-        event = Event.objects.create_event(
-            user=user,
-            repeat_mode=json_body['repeat_mode'],
-            start_time=json_body['start_time'],
-            length=json_body['length'],
-            is_active=True if 'is_active' not in json_body else json_body['is_active'],
-            event_name='' if 'event_name' not in json_body else json_body['event_name'],
-            event_note='' if 'event_note' not in json_body else json_body['event_note'],
-        )
-        try:
-            event.save()
+
+        if not Event.objects.filter().exists():
+            event = Event.objects.create_event(
+                user=user,
+                repeat_mode=json_body['repeat_mode'],
+                start_time=json_body['start_time'],
+                length=json_body['length'],
+                is_active=True if 'is_active' not in json_body else json_body['is_active'],
+                event_name='' if 'event_name' not in json_body else json_body['event_name'],
+                event_note='' if 'event_note' not in json_body else json_body['event_note'],
+            )
             return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
-        except error:
-            return Res(data={'result': RES_FAILURE, 'reason': error.__str__()})
+        else:
+            return Res(data={'result': RES_FAILURE, 'reason': 'there is an overlapping event in the specified period.'})
     else:
         return Res(data={'result': RES_BAD_REQUEST})
 
