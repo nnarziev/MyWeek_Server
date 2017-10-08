@@ -2,9 +2,11 @@ API Documentation for the project "My Week"
 Author:         Kobiljon Toshnazarov
 Last Edited:    October 4th, 2017
 
+
 Note:
 Return value 'result' is an integer field, and is always returned in a json object from all APIs.
 Return values are: -1(bad request), 0(success), 1(failure)
+
 
 
 -*-*- Login API (POST):
@@ -16,6 +18,7 @@ Required json body fields:      username (string, maxlen=32, PK)
 Additional return fields:       reason (string, in bad request case)
 
 
+
 -*-*- Register API (POST):
 Description:                    Registers a new user, after checking existence of given credentials
 API URL:                        http://qobiljon.pythonanywhere.com/users/register
@@ -25,6 +28,7 @@ Required json body fields:      username (string, maxlen=32, PK)
                                 email (string, maxlen=64)
 Additional return fields:       error (string, in failure case)
                                 reason (string, in bad request case)
+
 
 
 -*-*- Create Event API (POST):
@@ -43,6 +47,7 @@ Additional return codes:        event_id (long, in success case)
                                 reason (string, in failure case)
 
 
+
 -*-*- Category Map API (GET, POST):
 Description:                    For downloading list of string-to-integer mapping of event categories and their codes.
 API URL:                        http://qobiljon.pythonanywhere.com/events/categories
@@ -50,6 +55,7 @@ Required json header fields:    (must not have a header, or header must be empty
 Required json body fields:      (must not have a body, or body must be empty)
 Additional return codes:        length (integer, the length of categories array)
                                 categories (json-object array)
+
 
 
 -*-*- Suggest API (POST):
@@ -61,23 +67,25 @@ Required json body fields:      username (string, maxlen=32, FK)
 Additional return fields:       suggested_time (string, format: 'yyyymmdd-hhmm')
 
 
+
 -*-*- Fetch Events API (POST):
 Description:                    Returns all events set at the specifically requested period of time.
 API URL:                        http://qobiljon.pythonanywhere.com/events/load_week
 Required json header fields:    Content-Type (application/json)
-Required json body fields:      username
-                                password
-                                period_from
-                                period_till
+Required json body fields:      username (string, maxlen=32, FK)
+                                password (string, maxlen=32)
+                                period_from (integer)
+                                period_till (integer)
+
 
 
 -*-*- Disable API (POST):
 Description:                    Disables a single event.
 API URL:                        http://qobiljon.pythonanywhere.com/events/disable
 Required json header fields:    Content-Type (application/json)
-Required json body fields:      username
-                                password
-                                event_id
+Required json body fields:      username (string, maxlen=32, FK)
+                                password (string, maxlen=32)
+                                event_id (long)
 
 
 
