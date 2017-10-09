@@ -69,19 +69,27 @@ def create_event(request):
     if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']):
         user = User.objects.get(username=json_body['username'])
 
-        if not Event.objects.filter().exists():
-            event = Event.objects.create_event(
-                user=user,
-                repeat_mode=json_body['repeat_mode'],
-                start_time=json_body['start_time'],
-                length=json_body['length'],
-                is_active=True if 'is_active' not in json_body else json_body['is_active'],
-                event_name='' if 'event_name' not in json_body else json_body['event_name'],
-                event_note='' if 'event_note' not in json_body else json_body['event_note'],
-            )
-            return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
-        else:
-            return Res(data={'result': RES_FAILURE, 'reason': 'there is an overlapping event in the specified period.'})
+        _leng = json_body['length']
+        _from = json_body['start_time']
+        # _till = _from + (_leng // 60) * 100 + (_leng % 60)
+        # if json_body['repeat_mode'] > 0:  # dynamic event
+        #     Event.objects.filter(user=user, is_active=True, start_time__gte=_from, start_time__lt=_till)
+        # else:  # static event
+        #     asdas
+        #
+        # if not Event.objects.filter().exists():
+        event = Event.objects.create_event(
+            user=user,
+            repeat_mode=json_body['repeat_mode'],
+            start_time=_from,
+            length=_leng,
+            is_active=True if 'is_active' not in json_body else json_body['is_active'],
+            event_name='' if 'event_name' not in json_body else json_body['event_name'],
+            event_note='' if 'event_note' not in json_body else json_body['event_note'],
+        )
+        return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
+        # else:
+        #     return Res(data={'result': RES_FAILURE, 'reason': 'there is an overlapping event in the specified period.'})
     else:
         return Res(data={'result': RES_BAD_REQUEST})
 
