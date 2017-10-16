@@ -16,6 +16,6 @@ cat_map = [
 
 def ai_predict_time(username, category_id):
     if username != '':
-        return category_id
+        return 1710081600 if category_id < 1 else category_id
     else:
         return 1
