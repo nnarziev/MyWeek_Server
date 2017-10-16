@@ -36,7 +36,7 @@ def get_suggestion(request):
     json_body = json.loads(req_body)
     if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']) and 'category_id' in json_body:
         predicted_time = ai_predict_time(json_body['username'], json_body['category_id'])
-        return Res(data={'result': RES_SUCCESS, 'suggested_time': json_body['suggested_time']})
+        return Res(data={'result': RES_SUCCESS, 'suggested_time': predicted_time})
     else:
         return Res(data={'result': RES_BAD_REQUEST})
 

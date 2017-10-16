@@ -37,6 +37,7 @@ API URL:                        http://qobiljon.pythonanywhere.com/events/create
 Required json header fields:    Content-Type (application/json)
 Required json body fields:      username (string, maxlen=32, FK)
                                 password (string, maxlen=32)
+                                category_id (int, a value from category map api)
                                 start_time (integer, format: (dynamic on MODE_SINGLE) 'yymmddhhmm', (static on MODE_REPEAT) 'hhmm')
                                 repeat_mode (integer, format: 'binary 1~127 for repeating', '0 for single time event')
                                 length (short integer, only multiple of 30 except 0)
@@ -60,10 +61,11 @@ Additional return codes:        length (integer, the length of categories array)
 
 -*-*- Suggest API (POST):
 Description:                    Predicts and returns the most probable new personal event time according to a specific requested category ID using Artificial Intelligence.
-API URL:                        http://qobiljon.pythonanywhere.com/events/predict
+API URL:                        http://qobiljon.pythonanywhere.com/events/suggest
 Required json header fields:    Content-Type (application/json)
 Required json body fields:      username (string, maxlen=32, FK)
                                 password (string, maxlen=32)
+                                category_id (int, a value from category map api)
 Additional return fields:       suggested_time (string, format: 'yyyymmdd-hhmm')
 
 
