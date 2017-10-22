@@ -1,8 +1,8 @@
+import json
+import random
 from rest_framework.decorators import api_view
 from rest_framework.response import Response as Res
-import json
-from _dummy_thread import error
-
+# from _dummy_thread import error
 from ai_core import ai_predict_time, cat_map
 from events.models import Event
 from users.views import is_user_valid, RES_BAD_REQUEST, RES_SUCCESS, RES_FAILURE
@@ -27,7 +27,10 @@ def flushdb(request):
 
 @api_view(['GET', 'POST'])
 def get_categorycodes(request):
-    return Res(data={'result': RES_SUCCESS, 'length': cat_map.__len__(), 'categories': cat_map})
+    arr = []
+    for item in cat_map:
+        arr.append({item['name']: item['code']})
+    return Res(data={'result': RES_SUCCESS, 'categories': arr})
 
 
 @api_view(['POST'])
@@ -35,8 +38,10 @@ def get_suggestion(request):
     req_body = request.body.decode('utf-8')
     json_body = json.loads(req_body)
     if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']) and 'category_id' in json_body:
-        predicted_time = ai_predict_time(json_body['username'], json_body['category_id'])
-        return Res(data={'result': RES_SUCCESS, 'suggested_time': predicted_time})
+        suggestion = ai_predict_time(json_body['username'], json_body['category_id'], json_body)
+        rand_day = random.randrange(json_body['today'], json_body['weekend'] + 1, 1)
+        suggestion = rand_day * 10000 + suggestion
+        return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
     else:
         return Res(data={'result': RES_BAD_REQUEST})
 

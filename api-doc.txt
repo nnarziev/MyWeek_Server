@@ -66,6 +66,8 @@ Required json header fields:    Content-Type (application/json)
 Required json body fields:      username (string, maxlen=32, FK)
                                 password (string, maxlen=32)
                                 category_id (int, a value from category map api)
+                                today(int, temporary, for testing only)
+                                weekend(int, temporary, for testing only)
 Additional return fields:       suggested_time (string, format: 'yyyymmdd-hhmm')
 
 
