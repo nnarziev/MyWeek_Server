@@ -29,6 +29,25 @@ ALLOWED_HOSTS = [
     'qobiljon.pythonanywhere.com',
 ]
 
+CORS_ORIGIN_WHITELIST = (
+    'qobiljon.pythonanywhere.com',
+    'localhost:8000',
+    '127.0.0.1:9000'
+)
+
+CSRF_TRUSTED_ORIGINS = (
+    'qobiljon.pythonanywhere.com',
+)
+
+CORS_ALLOW_METHODS = (
+    'GET',
+    'POST',
+)
+
+CORS_ALLOW_HEADERS = (
+    'content-type',
+)
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'users',
     'events',
@@ -47,6 +67,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
