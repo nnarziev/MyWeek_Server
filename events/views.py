@@ -91,6 +91,7 @@ def create_event(request):
             is_active=True if 'is_active' not in json_body else json_body['is_active'],
             event_name='' if 'event_name' not in json_body else json_body['event_name'],
             event_note='' if 'event_note' not in json_body else json_body['event_note'],
+            category_id=json_body['category_id']
         )
         return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
         # else:

@@ -22,8 +22,9 @@ MODE_SINGLE = 'single'
 
 
 class EventManager(models.Manager):
-    def create_event(self, user, repeat_mode, start_time, length, is_active=True, event_name='', event_note=''):
-        res = self.create(event_id=time_ticks(), user=user, repeat_mode=repeat_mode, start_time=start_time, length=length, is_active=is_active, event_name=event_name, event_note=event_note)
+    def create_event(self, user, repeat_mode, start_time, length, category_id, is_active=True, event_name='', event_note=''):
+        res = self.create(event_id=time_ticks(), user=user, repeat_mode=repeat_mode, start_time=start_time, length=length, is_active=is_active, event_name=event_name, event_note=event_note,
+                          category_id=category_id)
         return res
 
 
@@ -40,6 +41,7 @@ class Event(models.Model):
     is_active = models.BooleanField(default=True)
     event_name = models.CharField(max_length=32, default='')
     event_note = models.CharField(max_length=200, default='')
+    category_id = models.IntegerField()
     objects = EventManager()
 
     def __json__(self):
@@ -50,5 +52,6 @@ class Event(models.Model):
             'start_time': self.start_time,
             'length': self.length,
             'event_name': self.event_name,
-            'event_note': self.event_note
+            'event_note': self.event_note,
+            'category_id': self.category_id
         }
