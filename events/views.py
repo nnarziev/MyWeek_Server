@@ -39,8 +39,14 @@ def get_suggestion(request):
     json_body = json.loads(req_body)
     if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']) and 'category_id' in json_body:
         suggestion = ai_predict_time(json_body['username'], json_body['category_id'], json_body)
-        rand_day = random.randrange(json_body['today'], json_body['weekend'] + 1, 1)
-        suggestion = rand_day * 10000 + suggestion
+
+        today = json_body['today']
+        weekend = json_body['weekend']
+
+        rand_day = random.randrange(0, (weekend % 100) - (today % 100), 1)
+        today += rand_day
+        
+        suggestion = today * 10000 + suggestion
         return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
     else:
         return Res(data={'result': RES_BAD_REQUEST})
