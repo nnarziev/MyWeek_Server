@@ -25,6 +25,7 @@ SECRET_KEY = 'j7dfdj0zi$*npv9yl#+p8-ngu$#)o3$-91z61g8w=e3tlwb)k5'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '165.246.165.130',
     '127.0.0.1',
     'qobiljon.pythonanywhere.com',
 ]
