@@ -45,7 +45,7 @@ def get_suggestion(request):
 
         rand_day = random.randrange(0, (weekend % 100) - (today % 100), 1)
         today += rand_day
-        
+
         suggestion = today * 10000 + suggestion
         return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
     else:
