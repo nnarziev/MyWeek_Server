@@ -7,6 +7,7 @@ Last Edited:    October 4th, 2017
 [IP:    165.246.165.130]
 [PORT:             2222]
 [PROTOCOL:         HTTP]
+[EXAMPLE: http://165.246.165.130:2222/...]
 
 
 
