@@ -2,8 +2,7 @@ import json
 import random
 from rest_framework.decorators import api_view
 from rest_framework.response import Response as Res
-# from _dummy_thread import error
-from ai_core import ai_predict_time, cat_map
+from ai_core import ai_predict_time, Tools
 from events.models import Event
 from users.views import is_user_valid, RES_BAD_REQUEST, RES_SUCCESS, RES_FAILURE
 
@@ -28,7 +27,7 @@ def flushdb(request):
 @api_view(['GET', 'POST'])
 def get_categorycodes(request):
     arr = []
-    for item in cat_map:
+    for item in Tools.cat_map:
         arr.append({item['name']: item['code']})
     return Res(data={'result': RES_SUCCESS, 'categories': arr})
 
@@ -38,16 +37,12 @@ def get_suggestion(request):
     req_body = request.body.decode('utf-8')
     json_body = json.loads(req_body)
     if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']) and 'category_id' in json_body:
-        suggestion = ai_predict_time(json_body['username'], json_body['category_id'], json_body)
-
-        today = json_body['today']
-        weekend = json_body['weekend']
-
-        rand_day = random.randrange(0, (weekend % 100) - (today % 100), 1)
-        today += rand_day
-
-        suggestion = today * 10000 + suggestion
-        return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
+        category_id = json_body['category_id']
+        suggestion = ai_predict_time(username=json_body['username'], category_id=category_id)
+        if suggestion == -1:
+            return Res(data={'result': RES_FAILURE, 'reason': 'category id [%d] doesn\'t exist' % category_id})
+        else:
+            return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
     else:
         return Res(data={'result': RES_BAD_REQUEST})
 
@@ -122,5 +117,30 @@ def disable_event(request):
                 return Res(data={'result': RES_FAILURE})
         else:
             return Res(data={'result': RES_FAILURE})
+    else:
+        return Res(data={'result': RES_BAD_REQUEST})
+
+
+@api_view(['POST'])
+def populate(request):
+    req_body = request.body.decode('utf-8')
+    json_body = json.loads(req_body)
+
+    if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']):
+        user = User.objects.filter(username=json_body['username'])
+
+        if 'size' in json_body:
+            obj_count = Event.objects.filter(user=user).count()
+
+            for category in Tools.cat_map:
+                repeat_mode = category['day']
+                start_time = category['time']
+
+                for n in range(json_body['size']):
+                    Event.objects.create_event(user=user, repeat_mode=repeat_mode, start_time=start_time + random.randrange(-1, 2, 1), length=60, category_id=category['code'], is_active=False)
+
+            return Res(data={'result': RES_SUCCESS, 'populated': '%d new hidden events' % (Event.objects.filter(user=user).count() - obj_count)})
+        else:
+            return Res(data={'result': RES_BAD_REQUEST})
     else:
         return Res(data={'result': RES_BAD_REQUEST})
