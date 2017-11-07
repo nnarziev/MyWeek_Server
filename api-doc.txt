@@ -3,6 +3,15 @@ Author:         Kobiljon Toshnazarov
 Last Edited:    October 4th, 2017
 
 
+[   SERVER PROPERTIES  ]
+[IP:    165.246.165.130]
+[PORT:             2222]
+[PROTOCOL:         HTTP]
+[EXAMPLE: http://165.246.165.130:2222/...]
+
+
+
+
 Note:
 Return value 'result' is an integer field, and is always returned in a json object from all APIs.
 Return values are: -1(bad request), 0(success), 1(failure)
