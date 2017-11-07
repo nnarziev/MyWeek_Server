@@ -29,7 +29,7 @@ Required json body fields:      username (string, maxlen=32, PK)
 Additional return fields:       error (string, in failure case)
                                 reason (string, in bad request case)
 
-3 -*-*-*-*-*-*-*-*-*-*-*-*- Create Event API (POST): -*-*-*-*-*-*-*-*-*-*-*-*-
+3 -*-*-*-*-*-*-*-*-*-*-*-*- Create and Edit Event API (POST): -*-*-*-*-*-*-*-*-*-*-*-*-
 Desciption:                     Creates a customized event by the user in the server database
 API URL:                        http://165.246.165.130:2222/events/create
 Required json header fields:    Content-Type (application/json)
@@ -43,6 +43,10 @@ Required json body fields:      username (string, maxlen=32, FK)
                                 event_note (string, maxlen=32, default: empty string)
 Additional return codes:        event_id (long, in success case)
                                 reason (string, in failure case)
+Notes:                          If 'event_id' value is passed to the 'Create Event API' and 'event_id' exists in the database,
+                                then all fields above are optional except 'username' and 'password'. The specified event with
+                                'event_id' will be updated with the provided fields. This will provide function of editing an
+                                existing event.
 
 4 -*-*-*-*-*-*-*-*-*-*-*-*- Category Map API (GET, POST): -*-*-*-*-*-*-*-*-*-*-*-*-
 Description:                    For downloading list of string-to-integer mapping of event categories and their codes.
