@@ -3,7 +3,6 @@ from django.db.models.deletion import CASCADE
 import time
 
 
-# region Constants
 def mode_days(days_count):
     return 'days-' + days_count
 
@@ -12,18 +11,16 @@ def time_ticks():
     return int(round(time.time() * 1000))
 
 
-# repeat every week on specific days
-MODE_REPEAT = 'repeat-xxxxxxx'
-# one time event
-MODE_SINGLE = 'single'
-
-
-# endregion Constants
-
-
 class EventManager(models.Manager):
     def create_event(self, user, repeat_mode, start_time, length, category_id, is_active=True, event_name='', event_note=''):
-        res = self.create(event_id=time_ticks(), user=user, repeat_mode=repeat_mode, start_time=start_time, length=length, is_active=is_active, event_name=event_name, event_note=event_note,
+        res = self.create(event_id=time_ticks(),
+                          user=user,
+                          repeat_mode=repeat_mode,
+                          start_time=start_time,
+                          length=length,
+                          is_active=is_active,
+                          event_name=event_name,
+                          event_note=event_note,
                           category_id=category_id)
         return res
 
