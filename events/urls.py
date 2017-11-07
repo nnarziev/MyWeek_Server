@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^fetch$', views.get_events),
     url(r'^disable$', views.disable_event),
     url(r'^flushdb$', views.flushdb),
+    url(r'^populate$', views.populate),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
