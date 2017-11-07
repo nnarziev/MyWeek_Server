@@ -52,9 +52,10 @@ def get_suggestion(request):
 def get_events(request):
 	req_body = request.body.decode('utf-8')
 	json_body = json.loads(req_body)
+
 	if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']):
-		user = User.objects.get(username=json_body['username'])[0]
-		
+		user = User.objects.get(username=json_body['username'])
+
 		_from = json_body['period_from']
 		_till = json_body['period_till']
 
@@ -76,7 +77,7 @@ def create_event(request):
 	json_body = json.loads(req_body)
 
 	if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']):
-		user = User.objects.get(username=json_body['username'])[0]
+		user = User.objects.get(username=json_body['username'])
 
 		# TODO: check if there are no overlapping events on the specified period of time
 
@@ -113,7 +114,8 @@ def disable_event(request):
 	req_body = request.body.decode('utf-8')
 	json_body = json.loads(req_body)
 	if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']):
-		user = User.objects.filter(username=json_body['username'])[0]
+		user = User.objects.filter(username=json_body['username'])
+
 		if Event.objects.filter(user=user, event_id=json_body['event_id']).exists():
 			event = Event.objects.filter(user=user, event_id=json_body['event_id'])[0]
 			if event and event.is_active:
@@ -134,7 +136,7 @@ def populate(request):
 	json_body = json.loads(req_body)
 
 	if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']):
-		user = User.objects.filter(username=json_body['username'])[0]
+		user = User.objects.filter(username=json_body['username'])
 
 		if 'size' in json_body:
 			obj_count = Event.objects.filter(user=user).count()
