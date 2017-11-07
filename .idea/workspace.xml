@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list id="47c4b1e0-004f-44da-b4e9-dd9749419ef8" name="Revert: Some changes" comment="" />
-    <list default="true" id="c02407b1-0af9-4c50-9a36-b5fea32c6850" name="Default" comment="">
+    <list default="true" id="c02407b1-0af9-4c50-9a36-b5fea32c6850" name="Default" comment="Some changes">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/events/models.py" afterPath="$PROJECT_DIR$/events/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/events/views.py" afterPath="$PROJECT_DIR$/events/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/MyWeek_Server$MyWeek_Server.coverage" NAME="MyWeek_Server Coverage Results" MODIFIED="1510072329892" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/MyWeek_Server$MyWeek_Server.coverage" NAME="MyWeek_Server Coverage Results" MODIFIED="1510072445652" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
@@ -55,8 +53,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/events/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="116" column="56" lean-forward="false" selection-start-line="116" selection-start-column="56" selection-end-line="116" selection-end-column="56" />
+            <state relative-caret-position="108">
+              <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
               <folding>
                 <element signature="e#360#731#0" expanded="false" />
                 <element signature="e#474#675#0" expanded="false" />
@@ -69,7 +67,14 @@
                 <element signature="e#2691#3877#0" expanded="false" />
                 <element signature="e#2832#2884#0" expanded="false" />
                 <element signature="e#3747#3754#0" expanded="false" />
+                <element signature="e#3995#4810#0" expanded="false" />
+                <element signature="e#4204#4747#0" expanded="false" />
+                <element signature="e#4363#4680#0" expanded="false" />
                 <element signature="e#4496#4605#0" expanded="false" />
+                <element signature="e#4860#5890#0" expanded="false" />
+                <element signature="e#5070#5827#0" expanded="false" />
+                <element signature="e#5177#5756#0" expanded="false" />
+                <element signature="e#5289#5609#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -481,19 +486,27 @@
       <option name="project" value="LOCAL" />
       <updated>1510069952604</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Some changes">
+      <created>1510072366680</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1510072366680</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="698" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46271187" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.46271187" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18960468" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18960468" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -554,13 +567,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/events/views.py</url>
-          <line>139</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
@@ -1008,33 +1014,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ai_core.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
-          <folding>
-            <element signature="e#265#1284#0" expanded="false" />
-            <element signature="e#265#283#0" expanded="false" />
-            <element signature="e#527#942#0" expanded="false" />
-            <element signature="e#1027#1114#0" expanded="false" />
-            <element signature="e#1173#1284#0" expanded="false" />
-            <element signature="e#1314#3370#0" expanded="false" />
-            <element signature="e#1314#1348#0" expanded="false" />
-            <element signature="e#1455#1473#0" expanded="false" />
-            <element signature="e#1625#1643#0" expanded="false" />
-            <element signature="e#1760#2221#0" expanded="false" />
-            <element signature="e#2281#2903#0" expanded="false" />
-            <element signature="e#2353#2864#0" expanded="false" />
-            <element signature="e#2481#2735#0" expanded="false" />
-            <element signature="e#2950#3168#0" expanded="false" />
-            <element signature="e#3203#3370#0" expanded="false" />
-            <element signature="e#3437#3669#0" expanded="false" />
-            <element signature="e#3493#3570#0" expanded="false" />
-            <element signature="e#3537#3570#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/events/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1064,10 +1043,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ai_core.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+          <folding>
+            <element signature="e#265#1284#0" expanded="false" />
+            <element signature="e#265#283#0" expanded="false" />
+            <element signature="e#527#942#0" expanded="false" />
+            <element signature="e#1027#1114#0" expanded="false" />
+            <element signature="e#1173#1284#0" expanded="false" />
+            <element signature="e#1314#3370#0" expanded="false" />
+            <element signature="e#1314#1348#0" expanded="false" />
+            <element signature="e#1455#1473#0" expanded="false" />
+            <element signature="e#1625#1643#0" expanded="false" />
+            <element signature="e#1760#2221#0" expanded="false" />
+            <element signature="e#2281#2903#0" expanded="false" />
+            <element signature="e#2353#2864#0" expanded="false" />
+            <element signature="e#2481#2735#0" expanded="false" />
+            <element signature="e#2950#3168#0" expanded="false" />
+            <element signature="e#3203#3370#0" expanded="false" />
+            <element signature="e#3437#3669#0" expanded="false" />
+            <element signature="e#3493#3570#0" expanded="false" />
+            <element signature="e#3537#3570#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/events/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="116" column="56" lean-forward="false" selection-start-line="116" selection-start-column="56" selection-end-line="116" selection-end-column="56" />
+        <state relative-caret-position="108">
+          <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
             <element signature="e#360#731#0" expanded="false" />
             <element signature="e#474#675#0" expanded="false" />
@@ -1080,7 +1086,14 @@
             <element signature="e#2691#3877#0" expanded="false" />
             <element signature="e#2832#2884#0" expanded="false" />
             <element signature="e#3747#3754#0" expanded="false" />
+            <element signature="e#3995#4810#0" expanded="false" />
+            <element signature="e#4204#4747#0" expanded="false" />
+            <element signature="e#4363#4680#0" expanded="false" />
             <element signature="e#4496#4605#0" expanded="false" />
+            <element signature="e#4860#5890#0" expanded="false" />
+            <element signature="e#5070#5827#0" expanded="false" />
+            <element signature="e#5177#5756#0" expanded="false" />
+            <element signature="e#5289#5609#0" expanded="false" />
           </folding>
         </state>
       </provider>
