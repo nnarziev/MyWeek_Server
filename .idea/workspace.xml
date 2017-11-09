@@ -2,20 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list id="47c4b1e0-004f-44da-b4e9-dd9749419ef8" name="Revert: Some changes" comment="" />
-    <list default="true" id="c02407b1-0af9-4c50-9a36-b5fea32c6850" name="Default" comment="Some changes">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+    <list default="true" id="c02407b1-0af9-4c50-9a36-b5fea32c6850" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyWeek_Server/urls.py" afterPath="$PROJECT_DIR$/MyWeek_Server/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyWeek_Server/wsgi.py" afterPath="$PROJECT_DIR$/MyWeek_Server/wsgi.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ai_core.py" afterPath="$PROJECT_DIR$/ai_core.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api-doc.txt" afterPath="$PROJECT_DIR$/api-doc.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/events/models.py" afterPath="$PROJECT_DIR$/events/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/events/views.py" afterPath="$PROJECT_DIR$/events/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manage.py" afterPath="$PROJECT_DIR$/manage.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/users/models.py" afterPath="$PROJECT_DIR$/users/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/users/views.py" afterPath="$PROJECT_DIR$/users/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,8 +24,8 @@
       <file leaf-file-name="ai_core.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ai_core.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="202" column="55" lean-forward="true" selection-start-line="202" selection-start-column="55" selection-end-line="202" selection-end-column="55" />
+            <state relative-caret-position="252">
+              <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
               <folding>
                 <element signature="e#272#1612#0" expanded="false" />
                 <element signature="e#272#290#0" expanded="false" />
@@ -561,7 +549,14 @@
       <option name="project" value="LOCAL" />
       <updated>1510076084896</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Some changes">
+      <created>1510210608448</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1510210608448</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -977,6 +972,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
           <caret line="20" column="13" lean-forward="true" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1057,8 +1053,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ai_core.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="202" column="55" lean-forward="true" selection-start-line="202" selection-start-column="55" selection-end-line="202" selection-end-column="55" />
+        <state relative-caret-position="252">
+          <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
           <folding>
             <element signature="e#272#1612#0" expanded="false" />
             <element signature="e#272#290#0" expanded="false" />
