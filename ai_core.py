@@ -1,4 +1,5 @@
 import numpy
+import os
 import pickle
 from pybrain3.datasets import SupervisedDataSet, UnsupervisedDataSet
 from pybrain3.structure import LinearLayer
@@ -9,24 +10,28 @@ from pybrain3.tools.shortcuts import buildNetwork
 class Tools:
 	# region Constants
 	# Weekdays
-	SUN = 0b1000000
-	MON = 0b0100000
-	TUE = 0b0010000
-	WED = 0b0001000
-	THU = 0b1000100
-	FRI = 0b1000010
-	SAT = 0b1000001
-	ANY = 0b1111111
-	NEV = 0b0000000
+	SUN = 0  # 0b1000000
+	MON = 1  # 0b0100000
+	TUE = 2  # 0b0010000
+	WED = 3  # 0b0001000
+	THU = 4  # 0b0000100
+	FRI = 5  # 0b0000010
+	SAT = 6  # 0b0000001
+	ANY = -1  # 0b1111111
+	NEV = -2  # 0b0000000
 
 	# Map of categories with ids
 	cat_map = [
-		{'name': 'default', 'code': 0, 'time': 8, 'day': ANY},
-		{'name': 'morning', 'code': 1, 'time': 7, 'day': ANY},
-		{'name': 'hiking', 'code': 2, 'time': 9, 'day': ANY ^ SUN},
-		{'name': 'game', 'code': 3, 'time': 14, 'day': SAT | SUN},
-		{'name': 'movie', 'code': 4, 'time': 20, 'day': THU | FRI | SAT},
-		{'name': 'club', 'code': 5, 'time': 22, 'day': FRI | SAT | SUN},
+		{'name': 'default', 'id': 0, 'time': 8, 'day': SUN},  # any not found category
+		{'name': 'trip', 'id': 1, 'time': 9, 'day': FRI},  # ex: school trips
+		{'name': 'hangout', 'id': 2, 'time': 19, 'day': SAT},  # ex: club, friends
+		{'name': 'sport', 'id': 3, 'time': 20, 'day': WED},  # ex: workout, jogging
+		{'name': 'game', 'id': 4, 'time': 21, 'day': SUN},  # ex: computer games, pool
+		{'name': 'project', 'id': 5, 'time': 14, 'day': MON},  # ex: one time project works
+		{'name': 'meet', 'id': 6, 'time': 12, 'day': MON},  # ex: off work meetings
+		{'name': 'party', 'id': 7, 'time': 15, 'day': SUN},  # ex: any type of party
+		{'name': 'study', 'id': 8, 'time': 19, 'day': TUE},  # ex: do homeworks
+		{'name': 'shop', 'id': 9, 'time': 13, 'day': THU},  # ex: buy clothes
 	]
 
 	# endregion
@@ -51,78 +56,177 @@ class CategoryAdvisor:
 	# endregion
 
 	# region Constants
-	NETWORK_FILENAME = 'networkdump.txt'
-	DATASET_FILENAME = 'datasetdump.txt'
+	PROJECT_DIR = 'myweek-ai-data'
+	KEY_TIME = 'time'
+	KEY_DAY = 'day'
+
+	NET_EXT = 'netdmp'
+	DST_EXT = 'dstdmp'
 
 	OBSERVE_LENGTH = 5
 	PREDICT_LENGTH = 1
-
 	# endregion
 
 	# region Variables
-	bprnetw = None
-	dataset = None
+	bprnetw_hr = None  # network for hour
+	bprnetw_dy = None  # network for weekday
+	dataset_hr = None  # dataset for hour
+	dataset_dy = None  # dataset for hour
+	user = None
+	category_id = None
 
 	# endregion
 
 	@staticmethod
-	def create(network, dataset):
+	def create(user, category_id, network_hr=None, dataset_hr=None, network_dy=None, dataset_dy=None):
 		res = CategoryAdvisor()
 
-		if network is None:
-			res.bprnetw = buildNetwork(CategoryAdvisor.OBSERVE_LENGTH, 20, CategoryAdvisor.PREDICT_LENGTH, outclass=LinearLayer, bias=True, recurrent=True)
-		else:
-			res.bprnetw = network
+		res.user = user
+		res.category_id = category_id
 
-		if dataset is None:
-			res.dataset = SupervisedDataSet(CategoryAdvisor.OBSERVE_LENGTH, CategoryAdvisor.PREDICT_LENGTH)
+		if network_hr is None:
+			res.bprnetw_hr = buildNetwork(CategoryAdvisor.OBSERVE_LENGTH, 20, CategoryAdvisor.PREDICT_LENGTH, outclass=LinearLayer, bias=True, recurrent=True)
 		else:
-			res.dataset = dataset
+			res.bprnetw_hr = network_hr
+
+		if dataset_hr is None:
+			res.dataset_hr = SupervisedDataSet(CategoryAdvisor.OBSERVE_LENGTH, CategoryAdvisor.PREDICT_LENGTH)
+		else:
+			res.dataset_hr = dataset_hr
+
+		if network_dy is None:
+			res.bprnetw_dy = buildNetwork(CategoryAdvisor.OBSERVE_LENGTH, 20, CategoryAdvisor.PREDICT_LENGTH, outclass=LinearLayer, bias=True, recurrent=True)
+		else:
+			res.bprnetw_dy = network_dy
+
+		if dataset_dy is None:
+			res.dataset_dy = SupervisedDataSet(CategoryAdvisor.OBSERVE_LENGTH, CategoryAdvisor.PREDICT_LENGTH)
+		else:
+			res.dataset_dy = dataset_dy
 
 		return res
 
-	def retrain_complete(self, history_complete):
-		if len(history_complete) >= CategoryAdvisor.OBSERVE_LENGTH:
-			self.dataset.clear()
+	@staticmethod
+	def recover(user, category_id):
+		if not CategoryAdvisor.is_backed_up(user, category_id):
+			return False
 
-			data_length = len(history_complete)
+		res = CategoryAdvisor()
+
+		res.user = user
+		res.category_id = category_id
+		res.bprnetw_hr = Tools.objrecv('~/%s/%s-%d-hr.%s' % (res.PROJECT_DIR, user.username, category_id, res.NET_EXT))
+		res.dataset_hr = Tools.objrecv('~/%s/%s-%d-hr.%s' % (res.PROJECT_DIR, user.username, category_id, res.DST_EXT))
+		res.bprnetw_dy = Tools.objrecv('~/%s/%s-%d-dy.%s' % (res.PROJECT_DIR, user.username, category_id, res.NET_EXT))
+		res.dataset_dy = Tools.objrecv('~/%s/%s-%d-dy.%s' % (res.PROJECT_DIR, user.username, category_id, res.DST_EXT))
+
+		return res
+
+	@staticmethod
+	def is_backed_up(user, category_id):
+		return \
+			os.path.exists('~/%s' % CategoryAdvisor.PROJECT_DIR) and \
+			os.path.isfile('~/%s/%s-%d-hr.%s' % (CategoryAdvisor.PROJECT_DIR, user.username, category_id, CategoryAdvisor.NET_EXT)) and \
+			os.path.isfile('~/%s/%s-%d-hr.%s' % (CategoryAdvisor.PROJECT_DIR, user.username, category_id, CategoryAdvisor.DST_EXT)) and \
+			os.path.isfile('~/%s/%s-%d-dy.%s' % (CategoryAdvisor.PROJECT_DIR, user.username, category_id, CategoryAdvisor.NET_EXT)) and \
+			os.path.isfile('~/%s/%s-%d-dy.%s' % (CategoryAdvisor.PROJECT_DIR, user.username, category_id, CategoryAdvisor.DST_EXT))
+
+	def backup(self):
+		# create backup files in home directory
+		if not os.path.exists('~/%s' % self.PROJECT_DIR):
+			os.makedirs('~/%s' % self.PROJECT_DIR)
+
+		Tools.objdump(dmp_obj=self.bprnetw_hr, dmp_filename='~/%s/%s-%d-hr.%s' % (self.PROJECT_DIR, self.user, self.category_id, self.NET_EXT))
+		Tools.objdump(dmp_obj=self.dataset_hr, dmp_filename='~/%s/%s-%d-hr.%s' % (self.PROJECT_DIR, self.user, self.category_id, self.DST_EXT))
+		Tools.objdump(dmp_obj=self.bprnetw_dy, dmp_filename='~/%s/%s-%d-dy.%s' % (self.PROJECT_DIR, self.user, self.category_id, self.NET_EXT))
+		Tools.objdump(dmp_obj=self.dataset_dy, dmp_filename='~/%s/%s-%d-dy.%s' % (self.PROJECT_DIR, self.user, self.category_id, self.DST_EXT))
+
+	def retrain_complete(self, cmp_history_hr, cmp_history_dy):
+		res = False
+
+		if len(cmp_history_hr) >= CategoryAdvisor.OBSERVE_LENGTH:
+			self.dataset_hr.clear()
+
+			data_length = len(cmp_history_hr)
 
 			for n in range(data_length):
 				if n + (CategoryAdvisor.OBSERVE_LENGTH - 1) + CategoryAdvisor.PREDICT_LENGTH < data_length:
-					self.dataset.addSample(history_complete[n:n + CategoryAdvisor.OBSERVE_LENGTH], history_complete[n + 1:n + 1 + CategoryAdvisor.PREDICT_LENGTH])
+					self.dataset_hr.addSample(cmp_history_hr[n:n + CategoryAdvisor.OBSERVE_LENGTH], cmp_history_hr[n + 1:n + 1 + CategoryAdvisor.PREDICT_LENGTH])
 
-			trainer = BackpropTrainer(self.bprnetw, self.dataset)
+			trainer = BackpropTrainer(self.bprnetw_hr, self.dataset_hr)
 			trainer.trainEpochs(100)
 
-			return True
+			res = True
+
+		if len(cmp_history_dy) >= CategoryAdvisor.OBSERVE_LENGTH:
+			self.dataset_dy.clear()
+
+			data_length = len(cmp_history_dy)
+
+			for n in range(data_length):
+				if n + (CategoryAdvisor.OBSERVE_LENGTH - 1) + CategoryAdvisor.PREDICT_LENGTH < data_length:
+					self.dataset_dy.addSample(cmp_history_dy[n:n + CategoryAdvisor.OBSERVE_LENGTH], cmp_history_dy[n + 1:n + 1 + CategoryAdvisor.PREDICT_LENGTH])
+
+			trainer = BackpropTrainer(self.bprnetw_dy, self.dataset_dy)
+			trainer.trainEpochs(100)
+
+			return res
 		else:
 			return False
 
-	def retrain_single(self, value):
-		inp = numpy.append(self.dataset['input'][-1][1:], self.dataset['target'][-1])
-		self.dataset.addSample(inp, [value])
+	def retrain_single(self, value_hr, value_dy):
+		# train the hour advisor network
+		inp = numpy.append(self.dataset_hr['input'][-1][1:], self.dataset_hr['target'][-1])
+		self.dataset_hr.addSample(inp, [value_hr])
 
-		trainer = BackpropTrainer(self.bprnetw, self.dataset)
-		trainer.trainEpochs(100)
+		trainer_hr = BackpropTrainer(self.bprnetw_hr, self.dataset_hr)
+		trainer_hr.trainEpochs(100)
+
+		# train the day advisor network
+		inp = numpy.append(self.dataset_dy['input'][-1][1:], self.dataset_dy['target'][-1])
+		self.dataset_dy.addSample(inp, [value_dy])
+
+		trainer_dy = BackpropTrainer(self.bprnetw_dy, self.dataset_dy)
+		trainer_dy.trainEpochs(100)
 
 	def calculate(self):
+		# calculate time
 		ts = UnsupervisedDataSet(CategoryAdvisor.OBSERVE_LENGTH, )
-		ts.addSample(self.dataset['input'][-1])
-		return int(self.bprnetw.activateOnDataset(ts)[0][0])
+		ts.addSample(self.dataset_hr['input'][-1])
+		time = int(self.bprnetw_hr.activateOnDataset(ts)[0][0])
+
+		# calculate day
+		ts.clear()
+		ts.addSample(self.dataset_hr['input'][-1])
+		day = int(self.bprnetw_dy.activateOnDataset(ts)[0][0])
+
+		return {self.KEY_TIME: time, self.KEY_DAY: day}
 
 
+# 2D map. Classification: rows=users, columns=category_ids
 advisors = {}
 
 
-def ai_predict_time(username, category_id):
-	category = None
+def ai_calc_time(user, category_id):
+	found = False
 	for _ctg in Tools.cat_map:
-		if _ctg['code'] == category_id:
-			category = _ctg
+		if _ctg['id'] == category_id:
+			found = True
 			break
-	if category is None or username is None or username is '':
-		return -1
+	if found is False:
+		category_id = Tools.cat_map[0]['id']  # use default category if not found
 
-	time = 0
-	# TODO: Use CategoryAdvisor for each category, run threads on training. Calculate next value and return
-	return time
+	advisor = advisors[user][category_id]
+	value = advisor.calculate()
+
+	if value[CategoryAdvisor.KEY_DAY] < 0:
+		value[CategoryAdvisor.KEY_DAY] = 0
+	if value[CategoryAdvisor.KEY_DAY] > 6:
+		value[CategoryAdvisor.KEY_DAY] = 6
+
+	if value[CategoryAdvisor.KEY_TIME] < 0:
+		value[CategoryAdvisor.KEY_TIME] = 0
+	if value[CategoryAdvisor.KEY_TIME] > 23:
+		value[CategoryAdvisor.KEY_TIME] = 23
+
+	return value[CategoryAdvisor.KEY_TIME] * 10 + value[CategoryAdvisor.KEY_DAY]

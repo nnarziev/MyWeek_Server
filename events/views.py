@@ -2,7 +2,7 @@ import json
 import random
 from rest_framework.decorators import api_view
 from rest_framework.response import Response as Res
-from ai_core import ai_predict_time, Tools
+from ai_core import ai_calc_time, Tools
 from events.models import Event
 from users.views import is_user_valid, RES_BAD_REQUEST, RES_SUCCESS, RES_FAILURE
 
@@ -27,8 +27,8 @@ def flushdb(request):
 @api_view(['GET', 'POST'])
 def get_categorycodes(request):
 	arr = []
-	for item in Tools.cat_map:
-		arr.append({item['name']: item['code']})
+	for category in Tools.cat_map:
+		arr.append({category['name']: category['id']})
 	return Res(data={'result': RES_SUCCESS, 'categories': arr})
 
 
@@ -37,13 +37,10 @@ def get_suggestion(request):
 	req_body = request.body.decode('utf-8')
 	json_body = json.loads(req_body)
 	if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']) and 'category_id' in json_body:
+		user = User.objects.get(username=json_body['username'])
 		category_id = json_body['category_id']
-		suggestion = ai_predict_time(username=json_body['username'], category_id=category_id)
-
-		if suggestion == -1:
-			return Res(data={'result': RES_FAILURE, 'reason': 'category id [%d] doesn\'t exist' % category_id})
-		else:
-			return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
+		suggestion = ai_calc_time(user=user, category_id=category_id)
+		return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
 	else:
 		return Res(data={'result': RES_BAD_REQUEST})
 
@@ -84,7 +81,7 @@ def create_event(request):
 		if 'event_id' in json_body and len(Event.objects.get(event_id=json_body['event_id'], is_active=True)) == 1:
 			event = Event.objects.get(event_id=json_body['event_id'], is_active=True)
 			event.user = user,
-			event.repeat_mode = json_body['repeat_mode'] if 'repeat_mode' in json_body else event.repeat_mode,
+			event.day = json_body['day'] if 'day' in json_body else event.day,
 			event.start_time = json_body['start_time'] if 'start_time' in json_body else event.start_time,
 			event.length = json_body['length'] if 'length' in json_body else event.length,
 			event.is_active = json_body['is_active'] if 'is_active' in json_body else event.is_active,
@@ -94,7 +91,7 @@ def create_event(request):
 		else:
 			event = Event.objects.create_event(
 				user=user,
-				repeat_mode=json_body['repeat_mode'],
+				day=json_body['day'],
 				start_time=json_body['start_time'],
 				length=json_body['length'],
 				is_active=True,
@@ -103,8 +100,6 @@ def create_event(request):
 				category_id=json_body['category_id']
 			)
 		return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
-	# else:
-	#     return Res(data={'result': RES_FAILURE, 'reason': 'there is an overlapping event in the specified period.'})
 	else:
 		return Res(data={'result': RES_BAD_REQUEST})
 
@@ -142,11 +137,16 @@ def populate(request):
 			obj_count = Event.objects.filter(user=user).count()
 
 			for category in Tools.cat_map:
-				repeat_mode = category['day']
-				start_time = category['time']
+				# calculate randomly
+				day = category['day'] + random.randrange(-1, 2, 1)
+				start_time = category['time'] + random.randrange(-1, 2, 1)
+
+				# verify validity of random calculation
+				start_time = start_time if 0 < start_time < 24 else category['start_time']
+				day = day if 0 <= day < 7 else category['day']
 
 				for n in range(json_body['size']):
-					Event.objects.create_event(user=user, repeat_mode=repeat_mode, start_time=start_time + random.randrange(-1, 2, 1), length=60, category_id=category['code'], is_active=False)
+					Event.objects.create_event(user=user, day=day, start_time=start_time, length=60, category_id=category['id'], is_active=False)
 
 			return Res(data={'result': RES_SUCCESS, 'populated': '%d new hidden events' % (Event.objects.filter(user=user).count() - obj_count)})
 		else:

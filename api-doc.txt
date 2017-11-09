@@ -37,7 +37,7 @@ Required json body fields:      username (string, maxlen=32, FK)
                                 password (string, maxlen=32)
                                 category_id (int, a value from category map api)
                                 start_time (integer, format: (dynamic on MODE_SINGLE) 'yymmddhhmm', (static on MODE_REPEAT) 'hhmm')
-                                repeat_mode (integer, format: 'binary 1~127 for repeating', '0 for single time event')
+                                day (integer, domain: 6-5-4-3-2-1-0 corresponds to sun-mon-tue-wed-thu-fri-sat)
                                 length (short integer, only multiple of 30 except 0)
                                 event_name (string, maxlen=32, default: empty string)
                                 event_note (string, maxlen=32, default: empty string)
@@ -65,7 +65,7 @@ Required json body fields:      username (string, maxlen=32, FK)
                                 category_id (int, a value from category map api)
                                 today(int, temporary, for testing only)
                                 weekend(int, temporary, for testing only)
-Additional return fields:       suggested_time (string, format: 'yyyymmdd-hhmm')
+Additional return fields:       suggested_time (integer, format: 'hhd' hour-hour-day)
 
 6 -*-*-*-*-*-*-*-*-*-*-*-*- Fetch Events API (POST): -*-*-*-*-*-*-*-*-*-*-*-*-
 Description:                    Returns all events set at the specifically requested period of time.
