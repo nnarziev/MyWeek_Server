@@ -78,7 +78,7 @@ def create_event(request):
 
 		# TODO: check if there are no overlapping events on the specified period of time
 
-		if 'event_id' in json_body and len(Event.objects.get(event_id=json_body['event_id'], is_active=True)) == 1:
+		if 'event_id' in json_body and Event.objects.filter(event_id=json_body['event_id'], is_active=True).exists():
 			event = Event.objects.get(event_id=json_body['event_id'], is_active=True)
 			event.user = user,
 			event.day = json_body['day'] if 'day' in json_body else event.day,
