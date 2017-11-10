@@ -45,7 +45,7 @@ class Event(models.Model):
 		return {
 			'event_id': self.event_id,
 			'username': self.user.username,
-			'repeat_mode': self.day,
+			'day': self.day,
 			'start_time': self.start_time,
 			'length': self.length,
 			'event_name': self.event_name,
