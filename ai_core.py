@@ -10,13 +10,13 @@ from pybrain3.tools.shortcuts import buildNetwork
 class Tools:
 	# region Constants
 	# Weekdays
-	SUN = 0  # 0b1000000
-	MON = 1  # 0b0100000
-	TUE = 2  # 0b0010000
-	WED = 3  # 0b0001000
-	THU = 4  # 0b0000100
-	FRI = 5  # 0b0000010
-	SAT = 6  # 0b0000001
+	SUN = 1  # 0b1000000
+	MON = 2  # 0b0100000
+	TUE = 3  # 0b0010000
+	WED = 4  # 0b0001000
+	THU = 5  # 0b0000100
+	FRI = 6  # 0b0000010
+	SAT = 7  # 0b0000001
 	ANY = -1  # 0b1111111
 	NEV = -2  # 0b0000000
 
