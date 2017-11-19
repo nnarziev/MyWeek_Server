@@ -1,6 +1,5 @@
 import json
 import random
-import datetime
 
 import ai_core
 from ai_core import Tools, CategoryAdvisor
@@ -12,8 +11,6 @@ from events.models import Event
 from users.views import is_user_valid, RES_BAD_REQUEST, RES_SUCCESS, RES_FAILURE
 
 from users.models import User
-
-date_today = -1
 
 
 @api_view(['POST'])
@@ -125,26 +122,43 @@ def create_event(request):
 			event.category_id = json_body['category_id'] if 'category_id' in json_body else event.category_id
 			event.save()
 
-			global date_today
-			temp_date = datetime.datetime.now().day
-
-			if temp_date > date_today:
-				ai_core.init_category_advisors(user=user)
-				date_today = temp_date
-
+			ai_core.check_retrain(user=user)
 			return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
 		else:
-			event = Event.objects.create_event(
-				user=user,
-				day=json_body['day'],
-				start_time=json_body['start_time'],
-				length=json_body['length'],
-				is_active=True,
-				event_name='' if 'event_name' not in json_body else json_body['event_name'],
-				event_note='' if 'event_note' not in json_body else json_body['event_note'],
-				category_id=json_body['category_id']
-			)
-			return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
+			if 'users' in json_body:
+				# batch create mode
+				users = [user]
+				event_ids = []
+				for username in json_body['users']:
+					users.append(User.objects.get(username=username))
+				for user in users:
+					event = Event.objects.create_event(
+						user=user,
+						day=json_body['day'],
+						start_time=json_body['start_time'],
+						length=json_body['length'],
+						is_active=True,
+						event_name='' if 'event_name' not in json_body else json_body['event_name'],
+						event_note='' if 'event_note' not in json_body else json_body['event_note'],
+						category_id=json_body['category_id']
+					)
+					event_ids.append(event.event_id)
+
+				ai_core.check_retrain(user=User.objects.get(username=json_body['username']))
+				return Res(data={'result': RES_SUCCESS, 'event_ids': event_ids})
+			else:
+				# single-user mode
+				event = Event.objects.create_event(
+					user=user,
+					day=json_body['day'],
+					start_time=json_body['start_time'],
+					length=json_body['length'],
+					is_active=True,
+					event_name='' if 'event_name' not in json_body else json_body['event_name'],
+					event_note='' if 'event_note' not in json_body else json_body['event_note'],
+					category_id=json_body['category_id']
+				)
+				return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
 	else:
 		return Res(data={'result': RES_BAD_REQUEST})
 

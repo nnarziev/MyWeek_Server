@@ -53,8 +53,7 @@ Description:                    For downloading list of string-to-integer mappin
 API URL:                        http://165.246.165.130:2222/events/categories
 Required json header fields:    (must not have a header, or header must be empty)
 Required json body fields:      (must not have a body, or body must be empty)
-Additional return codes:        length (integer, the length of categories array)
-                                categories (json-object array)
+Additional return codes:        categories (json-object array)
 
 5 -*-*-*-*-*-*-*-*-*-*-*-*- Suggest API (POST): -*-*-*-*-*-*-*-*-*-*-*-*-
 Description:                    Predicts and returns the most probable new personal event time according to a specific requested category ID using Artificial Intelligence.

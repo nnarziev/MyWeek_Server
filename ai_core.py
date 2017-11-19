@@ -1,5 +1,5 @@
 import random
-
+import datetime
 import numpy
 import os
 import pickle
@@ -264,3 +264,15 @@ def ai_calc_time(user, category_id):
 		category_id = Tools.cat_map[0]['id']  # use default category if not found
 	advisor = advisors[user][category_id]
 	return normalize_suggestion(advisor.calculate())
+
+
+date_today = -1
+
+
+def check_retrain(user):
+	global date_today
+	temp_date = datetime.datetime.now().day
+
+	if temp_date > date_today:
+		init_category_advisors(user=user)
+		date_today = temp_date
