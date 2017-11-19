@@ -5,7 +5,11 @@
     <list default="true" id="c02407b1-0af9-4c50-9a36-b5fea32c6850" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ai_core.py" afterPath="$PROJECT_DIR$/ai_core.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api-doc.txt" afterPath="$PROJECT_DIR$/api-doc.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/events/urls.py" afterPath="$PROJECT_DIR$/events/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/events/views.py" afterPath="$PROJECT_DIR$/events/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/users/views.py" afterPath="$PROJECT_DIR$/users/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,20 +19,56 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/MyWeek_Server$MyWeek_Server.coverage" NAME="MyWeek_Server Coverage Results" MODIFIED="1510407986994" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/MyWeek_Server$MyWeek_Server.coverage" NAME="MyWeek_Server Coverage Results" MODIFIED="1511119840079" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/MyWeek_Server$ai_core.coverage" NAME="ai_core Coverage Results" MODIFIED="1510198384033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/events/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="30" column="45" lean-forward="false" selection-start-line="30" selection-start-column="45" selection-end-line="30" selection-end-column="45" />
+              <folding>
+                <element signature="e#461#781#0" expanded="false" />
+                <element signature="e#563#734#0" expanded="false" />
+                <element signature="e#844#994#0" expanded="false" />
+                <element signature="e#1047#2632#0" expanded="false" />
+                <element signature="e#1275#2578#0" expanded="false" />
+                <element signature="e#1448#2423#0" expanded="false" />
+                <element signature="e#1486#2344#0" expanded="false" />
+                <element signature="e#1787#1846#0" expanded="false" />
+                <element signature="e#1927#1986#0" expanded="false" />
+                <element signature="e#2435#2578#0" expanded="false" />
+                <element signature="e#2681#3309#0" expanded="false" />
+                <element signature="e#2879#3263#0" expanded="false" />
+                <element signature="e#3360#5223#0" expanded="false" />
+                <element signature="e#3558#5169#0" expanded="false" />
+                <element signature="e#3814#4709#0" expanded="false" />
+                <element signature="e#4568#4636#0" expanded="false" />
+                <element signature="e#4721#5169#0" expanded="false" />
+                <element signature="e#5275#5971#0" expanded="false" />
+                <element signature="e#5472#5917#0" expanded="false" />
+                <element signature="e#5614#5865#0" expanded="false" />
+                <element signature="e#5726#5811#0" expanded="false" />
+                <element signature="e#6018#7128#0" expanded="false" />
+                <element signature="e#6216#7074#0" expanded="false" />
+                <element signature="e#6305#7018#0" expanded="false" />
+                <element signature="e#6396#6880#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>http://qobiljon.pythonanywhere.com</find>
       <find>User.objects.filter(username=json_body['username'])</find>
-      <find>create</find>
       <find>if 'username' in json_body</find>
       <find>if 'username'</find>
       <find>'code'</find>
@@ -36,6 +76,9 @@
       <find>repeat_mod</find>
       <find>repeat_mode</find>
       <find>suggest</find>
+      <find>except</find>
+      <find>try</find>
+      <find>create</find>
     </findStrings>
     <replaceStrings>
       <replace>http://165.246.165.130:2222</replace>
@@ -50,8 +93,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/MyWeek_Server/settings.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/events/urls.py" />
         <option value="$PROJECT_DIR$/events/__init__.py" />
         <option value="$PROJECT_DIR$/MyWeek_Server/__init__.py" />
         <option value="$PROJECT_DIR$/MyWeek_Server/wsgi.py" />
@@ -59,10 +100,12 @@
         <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/MyWeek_Server/urls.py" />
         <option value="$PROJECT_DIR$/events/models.py" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/events/urls.py" />
         <option value="$PROJECT_DIR$/users/views.py" />
-        <option value="$PROJECT_DIR$/api-doc.txt" />
-        <option value="$PROJECT_DIR$/ai_core.py" />
         <option value="$PROJECT_DIR$/events/views.py" />
+        <option value="$PROJECT_DIR$/ai_core.py" />
+        <option value="$PROJECT_DIR$/api-doc.txt" />
       </list>
     </option>
   </component>
@@ -123,7 +166,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -132,15 +174,11 @@
               <item name="MyWeek_Server" type="b2602c69:ProjectViewProjectNode" />
               <item name="MyWeek_Server" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="MyWeek_Server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MyWeek_Server" type="462c0819:PsiDirectoryNode" />
-              <item name="events" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -151,6 +189,117 @@
     <property name="nodejs.jest.jest_package" value="" />
     <property name="nodejs.protractor.protractor_package" value="" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/MyWeek_Server/settings.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/requirements.txt</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -535,7 +684,14 @@
       <option name="project" value="LOCAL" />
       <updated>1510210663882</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Some changes">
+      <created>1510411294206</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1510411294206</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -549,16 +705,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-2" width="1366" height="698" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18960468" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46271187" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2677966" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14494875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -567,7 +725,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881355" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -624,18 +781,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="15" />
+      <option name="time" value="26" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/events/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="864">
-          <caret line="48" column="19" lean-forward="true" selection-start-line="48" selection-start-column="19" selection-end-line="48" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/users/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -724,13 +874,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="5" lean-forward="true" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -902,13 +1045,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/events/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MyWeek_Server/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1322">
@@ -944,49 +1080,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/local/lib/python3.6/dist-packages/rest_framework/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="488" column="0" lean-forward="false" selection-start-line="488" selection-start-column="0" selection-end-line="488" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/users/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api-doc.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="68" column="0" lean-forward="true" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ai_core.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="208" column="0" lean-forward="true" selection-start-line="208" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
+        <state relative-caret-position="18">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding>
-            <element signature="e#272#1612#0" expanded="false" />
-            <element signature="e#272#290#0" expanded="false" />
-            <element signature="e#545#1327#0" expanded="false" />
-            <element signature="e#1397#1472#0" expanded="false" />
-            <element signature="e#1519#1612#0" expanded="false" />
-            <element signature="e#1639#7251#0" expanded="false" />
-            <element signature="e#1639#1673#0" expanded="false" />
-            <element signature="e#1771#1789#0" expanded="false" />
-            <element signature="e#1955#1973#0" expanded="false" />
-            <element signature="e#2298#3150#0" expanded="false" />
-            <element signature="e#3202#3821#0" expanded="false" />
-            <element signature="e#3878#4458#0" expanded="false" />
-            <element signature="e#4481#5167#0" expanded="false" />
-            <element signature="e#5232#6285#0" expanded="false" />
-            <element signature="e#5308#5752#0" expanded="false" />
-            <element signature="e#5407#5645#0" expanded="false" />
-            <element signature="e#5817#6261#0" expanded="false" />
-            <element signature="e#5916#6154#0" expanded="false" />
-            <element signature="e#6336#6857#0" expanded="false" />
-            <element signature="e#6883#7248#0" expanded="false" />
-            <element signature="e#7364#8022#0" expanded="false" />
-            <element signature="e#7408#7462#0" expanded="false" />
-            <element signature="e#7441#7462#0" expanded="false" />
+            <element signature="e#187#205#0" expanded="false" />
+            <element signature="e#303#357#0" expanded="false" />
+            <element signature="e#400#519#0" expanded="false" />
+            <element signature="e#428#505#0" expanded="false" />
+            <element signature="e#570#1073#0" expanded="false" />
+            <element signature="e#703#958#0" expanded="false" />
+            <element signature="e#770#906#0" expanded="false" />
+            <element signature="e#1127#1727#0" expanded="false" />
+            <element signature="e#1286#1586#0" expanded="false" />
+            <element signature="e#1467#1586#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/events/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/dist-packages/django/core/handlers/exception.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -998,38 +1139,82 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python3.6/dist-packages/rest_framework/views.py">
+    <entry file="file://$PROJECT_DIR$/ai_core.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="488" column="0" lean-forward="false" selection-start-line="488" selection-start-column="0" selection-end-line="488" selection-end-column="0" />
+        <state relative-caret-position="200">
+          <caret line="242" column="0" lean-forward="false" selection-start-line="242" selection-start-column="0" selection-end-line="242" selection-end-column="0" />
+          <folding>
+            <element signature="e#320#1660#0" expanded="false" />
+            <element signature="e#320#338#0" expanded="false" />
+            <element signature="e#593#1375#0" expanded="false" />
+            <element signature="e#1445#1520#0" expanded="false" />
+            <element signature="e#1567#1660#0" expanded="false" />
+            <element signature="e#1687#7296#0" expanded="false" />
+            <element signature="e#1687#1721#0" expanded="false" />
+            <element signature="e#1819#1837#0" expanded="false" />
+            <element signature="e#2003#2021#0" expanded="false" />
+            <element signature="e#2346#3198#0" expanded="false" />
+            <element signature="e#3250#3869#0" expanded="false" />
+            <element signature="e#3926#4506#0" expanded="false" />
+            <element signature="e#4529#5215#0" expanded="false" />
+            <element signature="e#5280#6333#0" expanded="false" />
+            <element signature="e#5356#5800#0" expanded="false" />
+            <element signature="e#5455#5693#0" expanded="false" />
+            <element signature="e#5865#6309#0" expanded="false" />
+            <element signature="e#5964#6202#0" expanded="false" />
+            <element signature="e#6384#6905#0" expanded="false" />
+            <element signature="e#6931#7296#0" expanded="false" />
+            <element signature="e#7334#8477#0" expanded="false" />
+            <element signature="e#7361#8474#0" expanded="false" />
+            <element signature="e#7407#8412#0" expanded="false" />
+            <element signature="e#7903#8150#0" expanded="false" />
+            <element signature="e#8293#8355#0" expanded="false" />
+            <element signature="e#8586#8978#0" expanded="false" />
+            <element signature="e#9019#9302#0" expanded="false" />
+            <element signature="e#9063#9117#0" expanded="false" />
+            <element signature="e#9096#9117#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api-doc.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="66" column="0" lean-forward="false" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/events/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+        <state relative-caret-position="108">
+          <caret line="30" column="45" lean-forward="false" selection-start-line="30" selection-start-column="45" selection-end-line="30" selection-end-column="45" />
           <folding>
-            <element signature="e#354#674#0" expanded="false" />
-            <element signature="e#456#627#0" expanded="false" />
-            <element signature="e#737#887#0" expanded="false" />
-            <element signature="e#940#1455#0" expanded="false" />
-            <element signature="e#1168#1401#0" expanded="false" />
-            <element signature="e#1504#2132#0" expanded="false" />
-            <element signature="e#1702#2086#0" expanded="false" />
-            <element signature="e#2183#3877#0" expanded="false" />
-            <element signature="e#2381#3823#0" expanded="false" />
-            <element signature="e#2637#3363#0" expanded="false" />
-            <element signature="e#3375#3823#0" expanded="false" />
-            <element signature="e#3929#4625#0" expanded="false" />
-            <element signature="e#4126#4571#0" expanded="false" />
-            <element signature="e#4268#4519#0" expanded="false" />
-            <element signature="e#4380#4465#0" expanded="false" />
-            <element signature="e#4672#5782#0" expanded="false" />
-            <element signature="e#4870#5728#0" expanded="false" />
-            <element signature="e#4959#5672#0" expanded="false" />
-            <element signature="e#5050#5534#0" expanded="false" />
+            <element signature="e#461#781#0" expanded="false" />
+            <element signature="e#563#734#0" expanded="false" />
+            <element signature="e#844#994#0" expanded="false" />
+            <element signature="e#1047#2632#0" expanded="false" />
+            <element signature="e#1275#2578#0" expanded="false" />
+            <element signature="e#1448#2423#0" expanded="false" />
+            <element signature="e#1486#2344#0" expanded="false" />
+            <element signature="e#1787#1846#0" expanded="false" />
+            <element signature="e#1927#1986#0" expanded="false" />
+            <element signature="e#2435#2578#0" expanded="false" />
+            <element signature="e#2681#3309#0" expanded="false" />
+            <element signature="e#2879#3263#0" expanded="false" />
+            <element signature="e#3360#5223#0" expanded="false" />
+            <element signature="e#3558#5169#0" expanded="false" />
+            <element signature="e#3814#4709#0" expanded="false" />
+            <element signature="e#4568#4636#0" expanded="false" />
+            <element signature="e#4721#5169#0" expanded="false" />
+            <element signature="e#5275#5971#0" expanded="false" />
+            <element signature="e#5472#5917#0" expanded="false" />
+            <element signature="e#5614#5865#0" expanded="false" />
+            <element signature="e#5726#5811#0" expanded="false" />
+            <element signature="e#6018#7128#0" expanded="false" />
+            <element signature="e#6216#7074#0" expanded="false" />
+            <element signature="e#6305#7018#0" expanded="false" />
+            <element signature="e#6396#6880#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -1,3 +1,5 @@
+import random
+
 import numpy
 import os
 import pickle
@@ -5,6 +7,8 @@ from pybrain3.datasets import SupervisedDataSet, UnsupervisedDataSet
 from pybrain3.structure import LinearLayer
 from pybrain3.supervised.trainers import BackpropTrainer
 from pybrain3.tools.shortcuts import buildNetwork
+
+from events.models import Event
 
 
 class Tools:
@@ -203,22 +207,40 @@ class CategoryAdvisor:
 		return {self.KEY_TIME: time, self.KEY_DAY: day}
 
 
+def init_category_advisors(user):
+	if user not in advisors:
+		temp = {}
+		for category in Tools.cat_map:
+			category_id = category['id']
+
+			# create or load the advisor object from storage
+			temp[category_id] = CategoryAdvisor.recover(user=user, category_id=category_id) if CategoryAdvisor.is_backed_up(user=user, category_id=category_id) else CategoryAdvisor.create(
+				user=user, category_id=category_id)
+
+			# populate data if not exists or lacks
+			if not Event.objects.filter(user=user, category_id=category_id).exists() or len(Event.objects.filter(user=user, category_id=category_id)) < 10:
+				day = category['day']
+				start_time = category['time']
+				for x in range(0, 10):
+					Event.objects.create_event(user=user, day=day, start_time=start_time + random.randrange(-1, 2, 1), length=60, category_id=category['id'], is_active=False)
+
+			# retrain the network completely
+			data_hr = []
+			data_dy = []
+			for event in Event.objects.filter(user=user, category_id=category_id):
+				data_hr.append(event.start_time)
+				data_dy.append(event.day)
+
+			temp[category_id].retrain_complete(data_hr, data_dy)
+		# add the created bunch of advisors
+		advisors[user] = temp
+
+
 # 2D map. Classification: rows=users, columns=category_ids
 advisors = {}
 
 
-def ai_calc_time(user, category_id):
-	found = False
-	for _ctg in Tools.cat_map:
-		if _ctg['id'] == category_id:
-			found = True
-			break
-	if found is False:
-		category_id = Tools.cat_map[0]['id']  # use default category if not found
-
-	advisor = advisors[user][category_id]
-	value = advisor.calculate()
-
+def normalize_suggestion(value):
 	if value[CategoryAdvisor.KEY_DAY] < 0:
 		value[CategoryAdvisor.KEY_DAY] = 0
 	if value[CategoryAdvisor.KEY_DAY] > 6:
@@ -230,3 +252,15 @@ def ai_calc_time(user, category_id):
 		value[CategoryAdvisor.KEY_TIME] = 23
 
 	return value[CategoryAdvisor.KEY_TIME] * 10 + value[CategoryAdvisor.KEY_DAY]
+
+
+def ai_calc_time(user, category_id):
+	found = False
+	for _ctg in Tools.cat_map:
+		if _ctg['id'] == category_id:
+			found = True
+			break
+	if found is False:
+		category_id = Tools.cat_map[0]['id']  # use default category if not found
+	advisor = advisors[user][category_id]
+	return normalize_suggestion(advisor.calculate())

@@ -1,12 +1,19 @@
 import json
 import random
+import datetime
+
+import ai_core
+from ai_core import Tools, CategoryAdvisor
+
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view
 from rest_framework.response import Response as Res
-from ai_core import ai_calc_time, Tools
 from events.models import Event
 from users.views import is_user_valid, RES_BAD_REQUEST, RES_SUCCESS, RES_FAILURE
 
 from users.models import User
+
+date_today = -1
 
 
 @api_view(['POST'])
@@ -39,8 +46,36 @@ def get_suggestion(request):
 	if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']) and 'category_id' in json_body:
 		user = User.objects.get(username=json_body['username'])
 		category_id = json_body['category_id']
-		suggestion = ai_calc_time(user=user, category_id=category_id)
-		return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
+
+		# detect batch/single-user suggestion mode
+		if 'users' in json_body:
+			# TODO: group suggestion
+
+			try:
+				temp_advisors = [ai_core.advisors[User.objects.get(username=username)][category_id] for username in json_body['users']]
+				temp_advisors += [ai_core.advisors[user][category_id]]
+
+				dataset_hr = []
+				dataset_dy = []
+
+				for arr in [advisor.dataset_hr['input'] for advisor in temp_advisors]:
+					for part in arr:
+						dataset_hr += [int(x) for x in part]
+				for arr in [advisor.dataset_dy['input'] for advisor in temp_advisors]:
+					for part in arr:
+						dataset_dy += [int(x) for x in part]
+
+				advisor = CategoryAdvisor.create(user=user, category_id=category_id)
+				advisor.OBSERVE_LENGTH *= len(json_body['users']) + 1
+				advisor.retrain_complete(cmp_history_hr=dataset_hr, cmp_history_dy=dataset_dy)
+				suggestion = ai_core.normalize_suggestion(advisor.calculate())
+
+				return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
+			except ObjectDoesNotExist:
+				return Res(data={'result': RES_BAD_REQUEST})
+		else:
+			suggestion = ai_core.ai_calc_time(user=user, category_id=category_id)
+			return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
 	else:
 		return Res(data={'result': RES_BAD_REQUEST})
 
@@ -89,6 +124,13 @@ def create_event(request):
 			event.event_note = json_body['event_note'] if 'event_note' in json_body else event.event_note
 			event.category_id = json_body['category_id'] if 'category_id' in json_body else event.category_id
 			event.save()
+
+			global date_today
+			temp_date = datetime.datetime.now().day
+
+			if temp_date > date_today:
+				ai_core.init_category_advisors(user=user)
+				date_today = temp_date
 
 			return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
 		else:
