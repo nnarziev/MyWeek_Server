@@ -223,10 +223,10 @@ class CategoryAdvisor:
 	def suggest_int(self):
 		value = self.suggest()
 
-		if value[CategoryAdvisor.KEY_DAY] < 0:
-			value[CategoryAdvisor.KEY_DAY] = 0
-		if value[CategoryAdvisor.KEY_DAY] > 6:
-			value[CategoryAdvisor.KEY_DAY] = 6
+		if value[CategoryAdvisor.KEY_DAY] < 1:
+			value[CategoryAdvisor.KEY_DAY] = 1
+		if value[CategoryAdvisor.KEY_DAY] > 7:
+			value[CategoryAdvisor.KEY_DAY] = 7
 
 		if value[CategoryAdvisor.KEY_TIME] < 0:
 			value[CategoryAdvisor.KEY_TIME] = 0
