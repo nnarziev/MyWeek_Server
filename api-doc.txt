@@ -6,7 +6,7 @@ Last Edited:    October 4th, 2017
 Note:
 Return value 'result' is an integer field, and is always returned in a json object from all APIs.
 Return values are: -1(bad request), 0(success), 1(failure)
-
+Maximum event length is 720 minutes
 
 
 
@@ -90,7 +90,13 @@ Required json body fields:      username (string, maxlen=32, FK)
                                 password (string, maxlen=32)
                                 size (int)
 
-9 -*-*-*-*-*-*-*-*-*-*-*-*- Template API (GET, POST): -*-*-*-*-*-*-*-*-*-*-*-*-
+9 -*-*-*-*-*-*-*-*-*-*-*-*- Constant Properties (Values) API (GET, POST): -*-*-*-*-*-*-*-*-*-*-*-*-
+Description:                    List of constant values used in Server side. The values must match in client side.
+API URL:                        http://165.246.165.130:2222/events/constants
+Required json header fields:    Content-Type (application/json)
+Additional return fields:       event_max_length (int, maximum length of events in minutes)
+
+10 -*-*-*-*-*-*-*-*-*-*-*-*- Template API (GET, POST): -*-*-*-*-*-*-*-*-*-*-*-*-
 Description:
 API URL:                        http://165.246.165.130:2222/~
 Required json header fields:    Content-Type (application/json)

@@ -1,6 +1,6 @@
 import json
 
-from ai_core import init_category_advisors
+from ai_core import init_advisors
 from users.models import User
 
 from rest_framework.decorators import api_view
@@ -33,7 +33,7 @@ def handle_login(request):
 	if 'username' in json_body and 'password' in json_body:
 		if is_user_valid(json_body['username'], json_body['password']):
 			user = User.objects.get(username=json_body['username'])
-			init_category_advisors(user=user)
+			init_advisors(user=user)
 			return Res(data={'result': RES_SUCCESS})
 		else:
 			return Res(data={'result': RES_FAILURE})

@@ -7,7 +7,6 @@ from pybrain3.datasets import SupervisedDataSet, UnsupervisedDataSet
 from pybrain3.structure import LinearLayer
 from pybrain3.supervised.trainers import BackpropTrainer
 from pybrain3.tools.shortcuts import buildNetwork
-
 from events.models import Event
 
 
@@ -52,6 +51,21 @@ class Tools:
 		dmp_obj = pickle.load(dump)
 		dump.close()
 		return dmp_obj
+
+	@staticmethod
+	def time_add(_time, _add):
+		time = datetime.datetime(
+			year=int(_time / 1000000),
+			month=int(_time / 10000) % 100,
+			day=int(_time / 100) % 100,
+			hour=int(_time % 100)
+		)
+
+		if _add >= 0:
+			time += datetime.timedelta(hours=int(_add / 60))
+		else:
+			time -= datetime.timedelta(hours=int(-_add / 60))
+		return int("%02d%02d%02d%02d" % (time.year % 100, time.month, time.day, time.hour))
 
 
 class CategoryAdvisor:
@@ -193,7 +207,7 @@ class CategoryAdvisor:
 		trainer_dy = BackpropTrainer(self.bprnetw_dy, self.dataset_dy)
 		trainer_dy.trainEpochs(100)
 
-	def calculate(self):
+	def suggest(self):
 		# calculate time
 		ts = UnsupervisedDataSet(CategoryAdvisor.OBSERVE_LENGTH, )
 		ts.addSample(self.dataset_hr['input'][-1])
@@ -206,8 +220,45 @@ class CategoryAdvisor:
 
 		return {self.KEY_TIME: time, self.KEY_DAY: day}
 
+	def suggest_int(self):
+		value = self.suggest()
 
-def init_category_advisors(user):
+		if value[CategoryAdvisor.KEY_DAY] < 0:
+			value[CategoryAdvisor.KEY_DAY] = 0
+		if value[CategoryAdvisor.KEY_DAY] > 6:
+			value[CategoryAdvisor.KEY_DAY] = 6
+
+		if value[CategoryAdvisor.KEY_TIME] < 0:
+			value[CategoryAdvisor.KEY_TIME] = 0
+		if value[CategoryAdvisor.KEY_TIME] > 23:
+			value[CategoryAdvisor.KEY_TIME] = 23
+
+		return value[CategoryAdvisor.KEY_TIME] * 10 + value[CategoryAdvisor.KEY_DAY]
+
+
+# region Variables
+# 2D map. Classification: rows=users, columns=category_ids
+advisors = {}
+
+# endregion
+
+# region Check & Update support
+date_today = -1
+
+
+def check_retrain(user):
+	global date_today
+	temp_date = datetime.datetime.now().day
+
+	if temp_date > date_today:
+		init_advisors(user=user)
+		date_today = temp_date
+
+
+# endregion
+
+
+def init_advisors(user):
 	if user not in advisors:
 		temp = {}
 		for category in Tools.cat_map:
@@ -236,25 +287,7 @@ def init_category_advisors(user):
 		advisors[user] = temp
 
 
-# 2D map. Classification: rows=users, columns=category_ids
-advisors = {}
-
-
-def normalize_suggestion(value):
-	if value[CategoryAdvisor.KEY_DAY] < 0:
-		value[CategoryAdvisor.KEY_DAY] = 0
-	if value[CategoryAdvisor.KEY_DAY] > 6:
-		value[CategoryAdvisor.KEY_DAY] = 6
-
-	if value[CategoryAdvisor.KEY_TIME] < 0:
-		value[CategoryAdvisor.KEY_TIME] = 0
-	if value[CategoryAdvisor.KEY_TIME] > 23:
-		value[CategoryAdvisor.KEY_TIME] = 23
-
-	return value[CategoryAdvisor.KEY_TIME] * 10 + value[CategoryAdvisor.KEY_DAY]
-
-
-def ai_calc_time(user, category_id):
+def request_suggestion(user, category_id):
 	found = False
 	for _ctg in Tools.cat_map:
 		if _ctg['id'] == category_id:
@@ -263,16 +296,4 @@ def ai_calc_time(user, category_id):
 	if found is False:
 		category_id = Tools.cat_map[0]['id']  # use default category if not found
 	advisor = advisors[user][category_id]
-	return normalize_suggestion(advisor.calculate())
-
-
-date_today = -1
-
-
-def check_retrain(user):
-	global date_today
-	temp_date = datetime.datetime.now().day
-
-	if temp_date > date_today:
-		init_category_advisors(user=user)
-		date_today = temp_date
+	return advisor.suggest_int()

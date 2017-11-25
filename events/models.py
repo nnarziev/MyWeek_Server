@@ -13,15 +13,17 @@ def time_ticks():
 
 class EventManager(models.Manager):
 	def create_event(self, user, day, start_time, length, category_id, is_active=True, event_name='', event_note=''):
-		res = self.create(event_id=time_ticks(),
-		                  user=user,
-		                  day=day,
-		                  start_time=start_time,
-		                  length=length,
-		                  is_active=is_active,
-		                  event_name=event_name,
-		                  event_note=event_note,
-		                  category_id=category_id)
+		res = self.create(
+			event_id=time_ticks(),
+			user=user,
+			day=day,
+			start_time=start_time,
+			length=length,
+			is_active=is_active,
+			event_name=event_name,
+			event_note=event_note,
+			category_id=category_id
+		)
 		return res
 
 
@@ -40,6 +42,10 @@ class Event(models.Model):
 	event_note = models.CharField(max_length=200, default='')
 	category_id = models.IntegerField()
 	objects = EventManager()
+
+	@staticmethod
+	def max_event_length():
+		return 720  # 720 minutes = 12 hours
 
 	def __json__(self):
 		return {

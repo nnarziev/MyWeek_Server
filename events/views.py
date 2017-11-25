@@ -13,6 +13,19 @@ from users.views import is_user_valid, RES_BAD_REQUEST, RES_SUCCESS, RES_FAILURE
 from users.models import User
 
 
+def overlaps(user, start_time, length):
+	# lvl1 - start-time check
+	if Event.objects.filter(user=user, start_time__range=(start_time, Tools.time_add(start_time, length) - 1)).exists():
+		return True
+
+	# lvl2 - running events check (at the time instance)
+	for event in Event.objects.filter(user=user, start_time__range=(start_time - int(Event.max_event_length() / 60), start_time - 1)):
+		if Tools.time_add(event.start_time, event.length) > start_time:
+			return True
+
+	return False
+
+
 @api_view(['POST'])
 def flushdb(request):
 	req_body = request.body.decode('utf-8')
@@ -36,6 +49,11 @@ def get_categorycodes(request):
 	return Res(data={'result': RES_SUCCESS, 'categories': arr})
 
 
+@api_view(['GET', 'POST'])
+def get_constants(request):
+	return Res(data={'result': RES_SUCCESS, 'event_max_length': Event.max_event_length()})
+
+
 @api_view(['POST'])
 def get_suggestion(request):
 	req_body = request.body.decode('utf-8')
@@ -46,8 +64,7 @@ def get_suggestion(request):
 
 		# detect batch/single-user suggestion mode
 		if 'users' in json_body:
-			# TODO: group suggestion
-
+			# group suggestion
 			try:
 				temp_advisors = [ai_core.advisors[User.objects.get(username=username)][category_id] for username in json_body['users']]
 				temp_advisors += [ai_core.advisors[user][category_id]]
@@ -65,14 +82,40 @@ def get_suggestion(request):
 				advisor = CategoryAdvisor.create(user=user, category_id=category_id)
 				advisor.OBSERVE_LENGTH *= len(json_body['users']) + 1
 				advisor.retrain_complete(cmp_history_hr=dataset_hr, cmp_history_dy=dataset_dy)
-				suggestion = ai_core.normalize_suggestion(advisor.calculate())
+				suggestion = advisor.suggest_int()
 
 				return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
 			except ObjectDoesNotExist:
 				return Res(data={'result': RES_BAD_REQUEST})
 		else:
-			suggestion = ai_core.ai_calc_time(user=user, category_id=category_id)
+			# single user suggetion
+			suggestion = ai_core.request_suggestion(user=user, category_id=category_id)
 			return Res(data={'result': RES_SUCCESS, 'suggested_time': suggestion})
+	else:
+		return Res(data={'result': RES_BAD_REQUEST})
+
+
+@api_view(['POST'])
+def get_event_by_id(request):
+	req_body = request.body.decode('utf-8')
+	json_body = json.loads(req_body)
+	if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']) and 'event_id' in json_body:
+		user = User.objects.get(username=json_body['username'])
+		if Event.objects.filter(user=user, is_active=True, event_id=json_body['event_id']).exists():
+			return Res(data={'result': RES_BAD_REQUEST, 'event': Event.objects.get(user=user, is_active=True, event_id=json_body['event_id']).__json__()})
+		else:
+			return Res(data={'result': RES_FAILURE})
+	else:
+		return Res(data={'result': RES_BAD_REQUEST})
+
+
+@api_view(['POST'])
+def check_periodfree(request):
+	req_body = request.body.decode('utf-8')
+	json_body = json.loads(req_body)
+	if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']) and 'start_time' in json_body and 'length' in json_body:
+		user = User.objects.get(username=json_body['username'])
+		return Res(data={'result': RES_SUCCESS if not overlaps(user, json_body['start_time'], json_body['length']) else RES_FAILURE})
 	else:
 		return Res(data={'result': RES_BAD_REQUEST})
 
@@ -91,8 +134,14 @@ def get_events(request):
 		result = {}
 		array = []
 
-		for event in Event.objects.filter(user=user, is_active=True, start_time__gte=_from, start_time__lt=_till):
+		# lvl1 events that start in the specified period
+		for event in Event.objects.filter(user=user, is_active=True, start_time__range=(_from, _till - 1)):
 			array.append(event.__json__())
+
+		# lvl2 events that are started before specified period and overlaps the period
+		for event in Event.objects.filter(user=user, start_time__range=(Tools.time_add(_from, -Event.max_event_length()), _from - 1)):
+			if Tools.time_add(event.start_time, event.length) > _from:
+				array.append(event.__json__())
 
 		result['result'] = RES_SUCCESS
 		result['array'] = array
@@ -107,31 +156,47 @@ def create_event(request):
 
 	if 'username' in json_body and 'password' in json_body and is_user_valid(json_body['username'], json_body['password']):
 		user = User.objects.get(username=json_body['username'])
-
-		# TODO: check if there are no overlapping events on the specified period of time
-
-		if 'event_id' in json_body and Event.objects.filter(event_id=json_body['event_id'], is_active=True).exists():
-			event = Event.objects.get(event_id=json_body['event_id'], is_active=True)
-
-			event.user = user
-			event.day = json_body['day'] if 'day' in json_body else event.day
-			event.start_time = json_body['start_time'] if 'start_time' in json_body else event.start_time
-			event.length = json_body['length'] if 'length' in json_body else event.length
-			event.event_name = json_body['event_name'] if 'event_name' in json_body else event.event_name
-			event.event_note = json_body['event_note'] if 'event_note' in json_body else event.event_note
-			event.category_id = json_body['category_id'] if 'category_id' in json_body else event.category_id
-			event.save()
-
-			ai_core.check_retrain(user=user)
-			return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
+		if overlaps(user, json_body['start_time'], json_body['length']):
+			return Res(data={'result': RES_FAILURE})
 		else:
-			if 'users' in json_body:
-				# batch create mode
-				users = [user]
-				event_ids = []
-				for username in json_body['users']:
-					users.append(User.objects.get(username=username))
-				for user in users:
+			if 'event_id' in json_body and Event.objects.filter(event_id=json_body['event_id'], is_active=True).exists():
+				event = Event.objects.get(event_id=json_body['event_id'], is_active=True)
+
+				event.user = user
+				event.day = json_body['day'] if 'day' in json_body else event.day
+				event.start_time = json_body['start_time'] if 'start_time' in json_body else event.start_time
+				event.length = json_body['length'] if 'length' in json_body else event.length
+				event.event_name = json_body['event_name'] if 'event_name' in json_body else event.event_name
+				event.event_note = json_body['event_note'] if 'event_note' in json_body else event.event_note
+				event.category_id = json_body['category_id'] if 'category_id' in json_body else event.category_id
+				event.save()
+
+				ai_core.check_retrain(user=user)
+				return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
+			else:
+				if 'users' in json_body:
+					# batch create mode
+					users = [user]
+					event_ids = []
+					for username in json_body['users']:
+						users.append(User.objects.get(username=username))
+					for user in users:
+						event = Event.objects.create_event(
+							user=user,
+							day=json_body['day'],
+							start_time=json_body['start_time'],
+							length=json_body['length'],
+							is_active=True,
+							event_name='' if 'event_name' not in json_body else json_body['event_name'],
+							event_note='' if 'event_note' not in json_body else json_body['event_note'],
+							category_id=json_body['category_id']
+						)
+						event_ids.append(event.event_id)
+
+					ai_core.check_retrain(user=User.objects.get(username=json_body['username']))
+					return Res(data={'result': RES_SUCCESS, 'event_ids': event_ids})
+				else:
+					# single-user mode
 					event = Event.objects.create_event(
 						user=user,
 						day=json_body['day'],
@@ -142,23 +207,7 @@ def create_event(request):
 						event_note='' if 'event_note' not in json_body else json_body['event_note'],
 						category_id=json_body['category_id']
 					)
-					event_ids.append(event.event_id)
-
-				ai_core.check_retrain(user=User.objects.get(username=json_body['username']))
-				return Res(data={'result': RES_SUCCESS, 'event_ids': event_ids})
-			else:
-				# single-user mode
-				event = Event.objects.create_event(
-					user=user,
-					day=json_body['day'],
-					start_time=json_body['start_time'],
-					length=json_body['length'],
-					is_active=True,
-					event_name='' if 'event_name' not in json_body else json_body['event_name'],
-					event_note='' if 'event_note' not in json_body else json_body['event_note'],
-					category_id=json_body['category_id']
-				)
-				return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
+					return Res(data={'result': RES_SUCCESS, 'event_id': event.event_id})
 	else:
 		return Res(data={'result': RES_BAD_REQUEST})
 
