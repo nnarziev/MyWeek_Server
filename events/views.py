@@ -15,11 +15,11 @@ from users.models import User
 
 def overlaps(user, start_time, length):
 	# lvl1 - start-time check
-	if Event.objects.filter(user=user, start_time__range=(start_time, Tools.time_add(start_time, length) - 1)).exists():
+	if Event.objects.filter(user=user, is_active=True, start_time__range=(start_time, Tools.time_add(start_time, length) - 1)).exists():
 		return True
 
 	# lvl2 - running events check (at the time instance)
-	for event in Event.objects.filter(user=user, start_time__range=(start_time - int(Event.max_event_length() / 60), start_time - 1)):
+	for event in Event.objects.filter(user=user, is_active=True, start_time__range=(start_time - int(Event.max_event_length() / 60), start_time - 1)):
 		if Tools.time_add(event.start_time, event.length) > start_time:
 			return True
 
